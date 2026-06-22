@@ -1,0 +1,24 @@
+# MyNexus は知識ベースのファイルだけを管理する。
+# いったん全部無視して、必要なものだけ下で許可する方式。
+
+# OS / エディタ
+.DS_Store
+
+# まず全部無視
+/*
+
+# --- MyNexus 知識ベースとして公開するものだけ許可 ---
+!/index.html
+!/README.md
+!/.nojekyll
+!/.gitignore
+
+# pages/ 配下（HTML のみ）
+!/pages/
+/pages/*
+!/pages/*.html
+
+# data/ 配下（台帳）
+!/data/
+/data/*
+!/data/*.json

@@ -1,0 +1,16 @@
+{
+  "site": "MyNexus",
+  "description": "「質問！」で始まる質問への解説ページを集めた知識ベース",
+  "pages": [
+    {
+      "id": "oshio-heihachiro-rebellion",
+      "title": "大塩平八郎の乱",
+      "file": "pages/oshio-heihachiro-rebellion.html",
+      "category": "日本史",
+      "tags": ["江戸時代", "天保", "1837年", "大坂", "一揆・反乱", "陽明学"],
+      "summary": "天保の飢饉のさなか、元・大坂町奉行所の役人で陽明学者の大塩平八郎が民を救うために起こした武装蜂起。半日で鎮圧されたが、幕府の権威を揺るがし天保の改革の一因となった。",
+      "created": "2026-06-22",
+      "related": []
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大塩平八郎の乱とは？</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #2c2622;
+      --accent: #b5402f;
+      --accent-soft: #f3d9d2;
+      --gold: #c79a3b;
+      --card: #fffdf8;
+      --line: #e2d9c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 0 16px 64px;
+    }
+    header {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 56px 24px 40px;
+    }
+    header .era {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 {
+      font-size: 2.3rem;
+      margin: 0 0 12px;
+      letter-spacing: 0.04em;
+    }
+    header .read {
+      font-size: 1.05rem;
+      color: #6b6258;
+    }
+    main { max-width: 860px; margin: 0 auto; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: 22px 0;
+      box-shadow: 0 6px 18px rgba(60,40,20,0.06);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 6px solid var(--accent);
+    }
+    .tldr {
+      background: linear-gradient(135deg, #fff7f4, #fdeee8);
+      border: 1px solid var(--accent-soft);
+    }
+    .tldr h2 { border-left-color: var(--gold); }
+    .hl {
+      background: var(--accent-soft);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      margin: 8px 0 0;
+    }
+    .fact {
+      background: #faf6ee;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .fact .label { font-size: 0.8rem; color: #8a8175; }
+    .fact .value { font-size: 1.15rem; font-weight: 700; margin-top: 4px; }
+    .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+    .steps li {
+      position: relative;
+      padding: 14px 14px 14px 56px;
+      margin-bottom: 12px;
+      background: #faf6ee;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+    .steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 14px; top: 50%;
+      transform: translateY(-50%);
+      width: 30px; height: 30px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.97rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+    }
+    th { background: var(--accent); color: #fff; font-weight: 600; }
+    tr:nth-child(even) td { background: #faf6ee; }
+    .quote {
+      background: #2c2622;
+      color: #f4f1ea;
+      border-radius: 14px;
+      padding: 22px 26px;
+      font-size: 1.15rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+    .quote small { display: block; margin-top: 10px; color: #c9bfae; font-size: 0.8rem; }
+    ul.plain li { margin-bottom: 8px; }
+    .note {
+      font-size: 0.85rem;
+      color: #8a8175;
+      text-align: center;
+      margin-top: 30px;
+    }
+    .nav-back {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .nav-back:hover { text-decoration: underline; }
+    .related-list { list-style: none; padding: 0; margin: 0; }
+    .related-list li { margin-bottom: 10px; }
+    .related-list a {
+      display: block;
+      background: #faf6ee;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--gold);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--ink);
+      text-decoration: none;
+      transition: transform 0.12s;
+    }
+    .related-list a:hover { transform: translateX(3px); }
+    .related-empty { color: #8a8175; font-size: 0.92rem; }
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.7rem; }
+      .card { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="era">江戸時代後期 ・ 1837年</span>
+    <h1>🔥 大塩平八郎の乱</h1>
+    <p class="read">おおしお へいはちろう の らん</p>
+  </header>
+
+  <main>
+    <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+    <section class="card tldr">
+      <h2>🪧 ひとことで言うと</h2>
+      <p>
+        <span class="hl">1837年（天保8年）</span>、大坂町奉行所の元役人で陽明学者でもあった
+        <span class="hl">大塩平八郎</span>が、飢饉で苦しむ民を救おうと、
+        役人や豪商に対して大坂で起こした<span class="hl">武装蜂起</span>や。
+        反乱そのものは<span class="hl">わずか半日で鎮圧</span>されてしもたけど、
+        「元役人が幕府に弓を引いた」という衝撃は全国に広がり、
+        ゆらぎ始めた江戸幕府の体制を象徴する大事件になったんやで。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>📌 基本データ</h2>
+      <div class="facts">
+        <div class="fact"><div class="label">いつ</div><div class="value">1837年</div></div>
+        <div class="fact"><div class="label">どこで</div><div class="value">大坂</div></div>
+        <div class="fact"><div class="label">中心人物</div><div class="value">大塩平八郎</div></div>
+        <div class="fact"><div class="label">期間</div><div class="value">約半日</div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🌾 なぜ起きた？ — 背景</h2>
+      <ul class="plain">
+        <li><strong>天保の大飢饉</strong>：1830年代、全国的な凶作で米が不足し、各地で餓死者が続出。とくに都市部は食料不足が深刻やった。</li>
+        <li><strong>大坂の苦境</strong>：「天下の台所」と呼ばれた商業都市・大坂でも米価が高騰し、庶民は飢えに苦しんでいた。</li>
+        <li><strong>役人と豪商への怒り</strong>：奉行所は有効な救済をせず、米を江戸へ回送。商人は米を買い占めて値をつり上げた、と大塩は見ていた。</li>
+        <li><strong>大塩平八郎の立場</strong>：彼は元・大坂町奉行所の与力（役人）で、<span class="hl">陽明学</span>者。「知ったことは行動に移すべき（知行合一）」という思想を持っていた。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>👤 大塩平八郎ってどんな人？</h2>
+      <table>
+        <tr><th>項目</th><th>内容</th></tr>
+        <tr><td>職業</td><td>元・大坂町奉行所の与力（警察・行政を担う役人）</td></tr>
+        <tr><td>学問</td><td>陽明学者。私塾「洗心洞（せんしんどう）」を開いて弟子を育てた</td></tr>
+        <tr><td>思想</td><td>知行合一 ＝ 正しいと知ったなら必ず実行すべき、という考え</td></tr>
+        <tr><td>行動</td><td>蜂起の前に、自分の蔵書を売り払い、その金を貧しい人々に分け与えた</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>⚔️ 何が起きた？ — 流れ</h2>
+      <ol class="steps">
+        <li>奉行所へ救済を訴えるが聞き入れられず、武力での決起を決意する。</li>
+        <li>1837年、弟子や周辺の農民らとともに「救民（民を救う）」の旗を掲げて挙兵。</li>
+        <li>豪商の屋敷などを襲い、火を放つ。大坂の市街の広範囲が焼けたとされる。</li>
+        <li>しかし計画が事前に漏れていたこともあり、奉行所の軍勢に<span class="hl">わずか半日で鎮圧</span>される。</li>
+        <li>大塩は逃亡して潜伏するが、約40日後に追い詰められ、自ら命を絶った。</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>🏯 その後の影響 — なぜ重要？</h2>
+      <ul class="plain">
+        <li><strong>幕府への衝撃</strong>：元・幕府の役人が反乱を起こしたこと自体が前代未聞で、幕府の権威を大きく揺るがした。</li>
+        <li><strong>各地への波及</strong>：「大塩門弟」を名乗る一揆や蜂起が各地で起き、社会不安が広がった。</li>
+        <li><strong>改革のきっかけ</strong>：こうした混乱は、のちの<span class="hl">天保の改革</span>（老中・水野忠邦による幕政改革）が行われる一因となった。</li>
+        <li><strong>時代の象徴</strong>：江戸幕府の支配が内側から揺らぎ始めたことを示す、幕末へ向かう転換点の一つとして語られる。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <div class="quote">
+        「救民」<br>
+        ― 民を救うために立ち上がった、元役人の反乱 ―
+        <small>※ 大塩らが掲げた旗印として伝えられる言葉</small>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🔗 関連する解説</h2>
+      <p class="related-empty">まだ関連ページがありません。新しい「質問！」が増えると、関連するテーマがここに自動で繋がっていきます。</p>
+    </section>
+
+    <p class="note">🌾 学習用の概説です。年号や細かな経緯には諸説あるため、レポート等では教科書・一次史料での確認をおすすめします。</p>
+  </main>
+</body>
+</html>
