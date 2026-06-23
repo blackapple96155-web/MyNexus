@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLMはただの文章予測をしているだけなの？</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #2c2622;
+      --accent: #275f74;
+      --accent-soft: #d9edf2;
+      --gold: #c79a3b;
+      --card: #fffdf8;
+      --line: #e2d9c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 0 16px 64px;
+    }
+    header {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 56px 24px 40px;
+    }
+    header .cat-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 { font-size: 2.15rem; margin: 0 0 12px; letter-spacing: 0.03em; }
+    header .read { font-size: 1.02rem; color: #6b6258; }
+    main { max-width: 900px; margin: 0 auto; }
+    .nav-back {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .nav-back:hover { text-decoration: underline; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: 22px 0;
+      box-shadow: 0 6px 18px rgba(30,50,60,0.06);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 6px solid var(--accent);
+    }
+    .tldr {
+      background: linear-gradient(135deg, #f7fbfd, #e8f4f8);
+      border: 1px solid var(--accent-soft);
+    }
+    .tldr h2 { border-left-color: var(--gold); }
+    .hl {
+      background: var(--accent-soft);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .analogy {
+      background: #fff7e8;
+      border: 1px dashed var(--gold);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-top: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.96rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--accent); color: #fff; font-weight: 600; }
+    tr:nth-child(even) td { background: #f5f9fa; }
+    ul.plain, ol.steps {
+      padding-left: 0;
+      list-style: none;
+    }
+    ul.plain li, ol.steps li {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 12px;
+    }
+    ul.plain li::before {
+      content: "▶";
+      position: absolute;
+      left: 0; top: 2px;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    ol.steps { counter-reset: step; }
+    ol.steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 0;
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 10px;
+    }
+    .flow .box {
+      flex: 1;
+      min-width: 130px;
+      background: #f5f9fa;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .flow .box.hl-box { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .flow .arrow { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-weight: 700; }
+    .quote {
+      background: #fff7e8;
+      border: 1px dashed var(--gold);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .quote small {
+      display: block;
+      margin-top: 8px;
+      color: #8a8175;
+      font-weight: 400;
+    }
+    .quiz-list {
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+    .quiz-list > li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f5f9fa;
+      padding: 16px 18px;
+    }
+    .quiz-list h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .choices {
+      margin: 0 0 10px;
+      padding-left: 1.4em;
+    }
+    .choices li { margin: 4px 0; }
+    details.answer {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.answer summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .related-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+    }
+    .related-list a {
+      display: block;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #faf6ee;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .related-list a:hover { text-decoration: underline; }
+    .note {
+      font-size: 0.85rem;
+      color: #8a8175;
+      text-align: center;
+      margin-top: 30px;
+    }
+    code { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.55rem; }
+      .card { padding: 22px 18px; }
+      .flow { flex-direction: column; }
+      .flow .arrow { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="cat-badge">AI・技術</span>
+    <h1>LLMはただの文章予測をしているだけなの？</h1>
+    <p class="read">next-token prediction / reasoning / language model</p>
+  </header>
+
+  <main>
+    <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+
+    <section class="card tldr">
+      <h2>ひとことで言うと</h2>
+      <p>
+        LLMはたしかに、基本の訓練目標としては<span class="hl">「次に来る単語の一部（トークン）を予測する」</span>ように学習します。
+        ただし、それを「ただの文章予測」と言い切ると大事なところを見落とします。
+        大量の文章で次トークン予測を学ぶ過程で、文法、知識、文脈、パターン、簡単な推論の手がかりまで内部に圧縮して使うようになるため、
+        実際には<span class="hl">文章予測という形式で、かなり広い認知的なふるまいを近似している</span>と見るのが近いです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>基本データ</h2>
+      <table>
+        <tr><th>用語</th><th>意味</th></tr>
+        <tr><td>LLM</td><td>Large Language Model。大量のテキストから言語パターンを学んだ大規模言語モデル。</td></tr>
+        <tr><td>トークン</td><td>モデルが扱う文字列の単位。単語そのものではなく、単語の一部や記号になることもある。</td></tr>
+        <tr><td>次トークン予測</td><td>ここまでの文脈から、次に来る確率が高いトークンを予測する訓練目標。</td></tr>
+        <tr><td>推論らしいふるまい</td><td>文脈を整理し、条件に合う答えを組み立てるように見える生成。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>「文章予測」とは何をしているのか</h2>
+      <p>
+        LLMは、入力された文章を読んで「次にどのトークンが来る可能性が高いか」を確率で出します。
+        たとえば「空は青い。海も」と来たら、次に「青い」「広い」「深い」などの候補に確率を割り当てます。
+        その中から1つを選び、また次を予測する。この繰り返しで文章が生成されます。
+      </p>
+      <div class="flow">
+        <div class="box">ここまでの文脈</div>
+        <div class="arrow">→</div>
+        <div class="box hl-box">次トークンの確率分布</div>
+        <div class="arrow">→</div>
+        <div class="box">1つ選ぶ</div>
+        <div class="arrow">→</div>
+        <div class="box">文脈に追加</div>
+      </div>
+      <p style="margin-top:14px;">
+        だから仕組みの中心だけを見るなら「文章予測」は正しいです。
+        ただし、<span class="hl">良い予測をするには世界や言葉の構造をかなり理解したような内部表現が必要になる</span>のが面白いところです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>なぜ予測だけで賢そうに見えるの？</h2>
+      <p>
+        次の言葉を当てるだけでも、文脈を無視しては高い精度が出ません。
+        物語の続き、法律文書、料理レシピ、コード、数学の説明、会話の含意などでは、それぞれ違う規則や背景知識が必要です。
+        つまり、次トークン予測をうまくやるには、文章の表面だけでなく<span class="hl">背後にある関係性</span>を利用する必要があります。
+      </p>
+      <ul class="plain">
+        <li><strong>文法</strong>：主語と述語、係り受け、語順をつかむ。</li>
+        <li><strong>意味</strong>：単語同士の関係や文脈上の役割をつかむ。</li>
+        <li><strong>知識</strong>：よく書かれる事実や説明の型を利用する。</li>
+        <li><strong>推論パターン</strong>：原因と結果、比較、条件分岐のような文章構造を学ぶ。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>「理解している」と言える？</h2>
+      <p>
+        ここは意見が分かれます。
+        人間のように体験や意識を持って理解している、とは言いにくいです。
+        一方で、文脈に応じて説明を変えたり、抽象化したり、例を作ったりできるため、
+        <span class="hl">機能的には理解に近いふるまいをする</span>とも言えます。
+      </p>
+      <table>
+        <tr><th>見方</th><th>強調する点</th><th>注意点</th></tr>
+        <tr><td>ただの予測</td><td>訓練目標は次トークン予測で、意識や体験はない。</td><td>実際の能力の広がりを軽く見すぎることがある。</td></tr>
+        <tr><td>理解に近い</td><td>文脈に応じた抽象化、説明、変換、推論風の応答ができる。</td><td>人間の理解と同じだと考えると過大評価になる。</td></tr>
+        <tr><td>道具として見る</td><td>内部の意識より、何ができて何が危ないかを重視する。</td><td>仕組みへの理解が浅いと使い方を誤る。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>人間の「予測」とも少し似ている</h2>
+      <p>
+        人間も会話を聞くとき、次に来そうな言葉や展開をある程度予測しています。
+        「昨日の夜、財布を落として……」と聞けば、困った話や探した話が続きそうだと予想します。
+        ただし人間は身体感覚、経験、目的、感情、社会的文脈も使います。
+        LLMの予測は、その多くを<span class="hl">テキスト上のパターンから間接的に学ぶ</span>点が違います。
+      </p>
+      <div class="analogy">
+        <strong>たとえ話</strong>：LLMは、世界そのものを歩き回った人というより、
+        世界について書かれた膨大な本・会話・コードを読んで、「こういう文脈ではこう続く」を非常に細かく学んだ存在に近いです。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>できること・苦手なこと</h2>
+      <table>
+        <tr><th>得意</th><th>理由</th></tr>
+        <tr><td>要約・言い換え</td><td>文章構造や重要語のパターンを学んでいるため。</td></tr>
+        <tr><td>説明文の作成</td><td>「概念を説明する文章」の型を多く学んでいるため。</td></tr>
+        <tr><td>コード補助</td><td>コードと説明の対応関係、典型的な実装パターンを学んでいるため。</td></tr>
+        <tr><td>アイデア出し</td><td>似たパターンの組み合わせや変形が得意なため。</td></tr>
+      </table>
+      <table>
+        <tr><th>苦手・注意</th><th>理由</th></tr>
+        <tr><td>最新情報</td><td>訓練後に変わった事実は知らない場合がある。</td></tr>
+        <tr><td>厳密な計算</td><td>計算機そのものではなく、文章生成として近似しがちなため。</td></tr>
+        <tr><td>根拠確認</td><td>もっともらしい文章を作れても、出典が本当に存在するとは限らない。</td></tr>
+        <tr><td>長い作業の一貫性</td><td>文脈長や注意の配分に限界があるため、途中でずれることがある。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>「推論」は本物なの？</h2>
+      <p>
+        LLMの推論は、人間の意識的な思考と同じとは限りません。
+        しかし、訓練データの中には説明、証明、議論、デバッグ、計画のような推論過程を含む文章が大量にあります。
+        それらを学ぶことで、モデルは<span class="hl">推論の形をした文章を生成し、その結果として正しい答えに近づく</span>ことがあります。
+      </p>
+      <ol class="steps">
+        <li>問題文の条件を文脈として読む。</li>
+        <li>似た問題や説明のパターンを内部表現から呼び出す。</li>
+        <li>中間ステップらしい文を生成しながら、次の候補を絞る。</li>
+        <li>答えを出す。ただし途中で誤った前提を置くこともある。</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>誤解しやすいポイント</h2>
+      <ul class="plain">
+        <li><strong>「予測だから無意味」ではない</strong>：予測精度を上げるために、多くの構造を学ぶ必要がある。</li>
+        <li><strong>「賢そうだから人間と同じ」でもない</strong>：意識、身体経験、責任主体を持つとは限らない。</li>
+        <li><strong>「正しそうな文章」と「正しい事実」は別</strong>：流暢でも誤りを含むことがある。</li>
+        <li><strong>「モデル単体」と「アプリ全体」は別</strong>：検索、ツール、ハーネスが加わると能力や安全性が変わる。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>つまり何が大事？</h2>
+      <p>
+        「LLMはただの文章予測か？」への答えは、<span class="hl">仕組みとしては次トークン予測が中心。でも、その予測を高精度にする過程で、言語・知識・推論パターンをかなり利用する</span>です。
+        だから、過小評価して「ただのオートコンプリート」と見るのも、過大評価して「人間のように理解している」と見るのも危険です。
+        いちばん実用的なのは、<span class="hl">強力だが間違える文章生成システム</span>として、検証やツールと組み合わせて使うことです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. 「LLMは次トークン予測をしている」という説明の正しい受け止め方はどれ？</h3>
+          <ol class="choices" type="A">
+            <li>訓練目標としては正しいが、そのために文脈・意味・知識の構造も利用するようになる</li>
+            <li>完全に間違いで、LLMは予測を一切していない</li>
+            <li>正しいので、LLMには文法や意味のパターンはまったく関係ない</li>
+            <li>次トークン予測とは、必ず辞書順で次の単語を選ぶことを意味する</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。次トークン予測は中心的な訓練目標ですが、精度よく予測するには文脈や意味の構造を内部的に利用する必要があります。</p></details>
+        </li>
+        <li>
+          <h3>Q2. LLMが「推論しているように見える」主な理由として最も適切なのはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>人間と同じ身体経験を必ず持っているから</li>
+            <li>推論・説明・証明・計画を含む文章パターンを学び、文脈に応じてそれを生成できるから</li>
+            <li>すべての回答前に外部データベースを必ず検索しているから</li>
+            <li>次トークンをランダムに選ぶだけで、文脈は一切見ていないから</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。LLMは推論過程を含む大量の文章からパターンを学び、条件に合う中間説明を生成することで、推論らしいふるまいを示します。ただし人間の意識的思考と同一とは限りません。</p></details>
+        </li>
+        <li>
+          <h3>Q3. LLMを実用で使う時の姿勢として最もバランスがよいものはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>文章が自然なら必ず事実なので、そのまま信じる</li>
+            <li>ただの予測なので、どんな用途にもまったく役に立たない</li>
+            <li>強力だが誤る文章生成システムとして、検証・検索・ツール・人間の判断と組み合わせる</li>
+            <li>一度正解したモデルは、以後すべての最新情報を自動で知っている</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は C。LLMは有用ですが、流暢な誤答や古い情報を出すことがあります。重要な用途では根拠確認やツール、ハーネス、人間の判断と組み合わせるのが安全です。</p></details>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>関連する解説</h2>
+      <ul class="related-list">
+        <li><a href="ai-harness.html">AIにおける「ハーネス」とは？</a></li>
+      </ul>
+    </section>
+
+    <p class="note">学習用の概説です。LLMの内部表現や推論能力の解釈には研究上の議論があり、用途によって必要な検証方法も変わります。</p>
+  </main>
+</body>
+</html>

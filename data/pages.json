@@ -20,7 +20,7 @@
       "tags": ["AI", "LLM", "エージェント", "ハーネス", "用語解説"],
       "summary": "AIのハーネスとは、モデル（特にLLM）を実用的に動かすために周囲を固めるソフトウェアの枠組み。プロンプト管理・ツール連携・出力処理・ループ制御などを担う。エージェントハーネスや評価ハーネスなど文脈で意味が変わる。",
       "created": "2026-06-22",
-      "related": ["github"]
+      "related": ["github", "llm-next-token-prediction"]
     },
     {
       "id": "github",
@@ -41,6 +41,16 @@
       "summary": "ナポレオン・ボナパルトは、フランス革命後の混乱から軍人として台頭し、皇帝にまで上りつめた人物。近代法や行政制度に影響を残した一方、ヨーロッパ各地を戦争に巻き込んだ。",
       "created": "2026-06-23",
       "related": ["oshio-heihachiro-rebellion"]
+    },
+    {
+      "id": "llm-next-token-prediction",
+      "title": "LLMはただの文章予測をしているだけなの？",
+      "file": "pages/llm-next-token-prediction.html",
+      "category": "AI・技術",
+      "tags": ["LLM", "AI", "次トークン予測", "推論", "言語モデル", "用語解説"],
+      "summary": "LLMは次トークン予測を中心に学習するが、それを高精度に行うために文脈・意味・知識・推論パターンを内部的に利用する。過小評価も過大評価も避け、検証と組み合わせて使うことが重要。",
+      "created": "2026-06-23",
+      "related": ["ai-harness"]
     }
   ]
 }
