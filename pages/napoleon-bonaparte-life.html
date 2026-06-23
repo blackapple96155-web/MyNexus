@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ナポレオン・ボナパルトの生涯</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #2c2622;
+      --accent: #6f2f2f;
+      --accent-soft: #f0d7d2;
+      --gold: #c79a3b;
+      --card: #fffdf8;
+      --line: #e2d9c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 0 16px 64px;
+    }
+    header {
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 56px 24px 40px;
+    }
+    header .era {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 { font-size: 2.2rem; margin: 0 0 12px; letter-spacing: 0.03em; }
+    header .read { font-size: 1.02rem; color: #6b6258; }
+    main { max-width: 880px; margin: 0 auto; }
+    .nav-back {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .nav-back:hover { text-decoration: underline; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: 22px 0;
+      box-shadow: 0 6px 18px rgba(60,40,20,0.06);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 6px solid var(--accent);
+    }
+    .tldr {
+      background: linear-gradient(135deg, #fff7f2, #f3e7dd);
+      border: 1px solid var(--accent-soft);
+    }
+    .tldr h2 { border-left-color: var(--gold); }
+    .hl {
+      background: var(--accent-soft);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    .fact {
+      background: #faf6ee;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .fact .label { color: #8a8175; font-size: 0.82rem; }
+    .fact .value { font-size: 1.05rem; font-weight: 700; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.96rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--accent); color: #fff; font-weight: 600; }
+    tr:nth-child(even) td { background: #fbf6f2; }
+    ul.plain, ol.steps {
+      padding-left: 0;
+      list-style: none;
+    }
+    ul.plain li, ol.steps li {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 12px;
+    }
+    ul.plain li::before {
+      content: "▶";
+      position: absolute;
+      left: 0; top: 2px;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    ol.steps { counter-reset: step; }
+    ol.steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 0;
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 10px;
+    }
+    .flow .box {
+      flex: 1;
+      min-width: 130px;
+      background: #fbf6f2;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .flow .box.hl-box { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .flow .arrow { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-weight: 700; }
+    .quote {
+      background: #fff7e8;
+      border: 1px dashed var(--gold);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .quote small {
+      display: block;
+      margin-top: 8px;
+      color: #8a8175;
+      font-weight: 400;
+    }
+    .quiz-list {
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+    .quiz-list > li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff8ef;
+      padding: 16px 18px;
+    }
+    .quiz-list h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .choices {
+      margin: 0 0 10px;
+      padding-left: 1.4em;
+    }
+    .choices li { margin: 4px 0; }
+    details.answer {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.answer summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .related-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+    }
+    .related-list a {
+      display: block;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #faf6ee;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .related-list a:hover { text-decoration: underline; }
+    .note {
+      font-size: 0.85rem;
+      color: #8a8175;
+      text-align: center;
+      margin-top: 30px;
+    }
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.6rem; }
+      .card { padding: 22px 18px; }
+      .flow { flex-direction: column; }
+      .flow .arrow { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="era">フランス革命期から19世紀初頭</span>
+    <h1>ナポレオン・ボナパルトの生涯</h1>
+    <p class="read">Napoleon Bonaparte / 1769-1821</p>
+  </header>
+
+  <main>
+    <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+
+    <section class="card tldr">
+      <h2>ひとことで言うと</h2>
+      <p>
+        ナポレオン・ボナパルトは、<span class="hl">フランス革命後の混乱から頭角を現し、皇帝にまで上りつめた軍人・政治家</span>です。
+        彼はヨーロッパ各地を戦争に巻き込みながら巨大な影響力を持ち、同時に
+        <span class="hl">ナポレオン法典</span>などで近代国家の仕組みにも大きな足跡を残しました。
+        その生涯は、「革命の子」から「皇帝」、そして「敗者としての流刑者」へ向かう、栄光と限界の物語です。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>基本データ</h2>
+      <div class="facts">
+        <div class="fact"><div class="label">生年</div><div class="value">1769年</div></div>
+        <div class="fact"><div class="label">出身</div><div class="value">コルシカ島</div></div>
+        <div class="fact"><div class="label">地位</div><div class="value">フランス皇帝</div></div>
+        <div class="fact"><div class="label">没年</div><div class="value">1821年</div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>生涯の大きな流れ</h2>
+      <ol class="steps">
+        <li><strong>コルシカ島に生まれる</strong>：1769年、地中海のコルシカ島で生まれる。フランス本土では「地方出身者」と見られる立場だった。</li>
+        <li><strong>軍人として頭角を現す</strong>：フランス革命で古い身分秩序が揺らぐ中、砲兵士官として実力を示し、若くして将軍になる。</li>
+        <li><strong>クーデターで政治の中心へ</strong>：1799年のブリュメール18日のクーデターで統領政府を作り、第一統領として実権を握る。</li>
+        <li><strong>皇帝となりヨーロッパを動かす</strong>：1804年に皇帝に即位。多くの戦争に勝利し、フランスの影響力をヨーロッパ中へ広げる。</li>
+        <li><strong>ロシア遠征で失速する</strong>：1812年のロシア遠征が大失敗し、軍事的な勢いが大きく落ちる。</li>
+        <li><strong>敗北と流刑</strong>：1814年に退位してエルバ島へ流される。1815年に復帰するが、ワーテルローの戦いで敗れ、セントヘレナ島で生涯を終える。</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>時代背景 — なぜ出世できた？</h2>
+      <p>
+        ナポレオンの出世は、個人の才能だけでは説明できません。背景には<span class="hl">フランス革命</span>があります。
+        革命で王政や身分制度が揺らぎ、貴族でなくても能力で上へ行ける余地が広がりました。
+        戦争が続いたことで、軍の中でも実力ある指揮官が強く求められたのです。
+      </p>
+      <div class="flow">
+        <div class="box">革命で旧秩序が揺らぐ</div>
+        <div class="arrow">→</div>
+        <div class="box">戦争で軍人が必要に</div>
+        <div class="arrow">→</div>
+        <div class="box hl-box">ナポレオンが台頭</div>
+        <div class="arrow">→</div>
+        <div class="box">政治権力を握る</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>功績と評価</h2>
+      <table>
+        <tr><th>面</th><th>内容</th></tr>
+        <tr><td>政治</td><td>中央集権的な統治を進め、革命後の混乱をある程度安定させた。</td></tr>
+        <tr><td>法律</td><td>ナポレオン法典を整備し、法の前の平等や所有権など近代法の考え方を広めた。</td></tr>
+        <tr><td>教育・行政</td><td>官僚制や教育制度を整え、国家を効率よく動かす仕組みを強めた。</td></tr>
+        <tr><td>軍事</td><td>機動力と集中攻撃を活かし、多くの戦いで勝利した。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>影の部分</h2>
+      <ul class="plain">
+        <li><strong>戦争の拡大</strong>：ヨーロッパ各地で戦争が続き、多くの犠牲者を出した。</li>
+        <li><strong>権力の集中</strong>：革命の自由や共和政の理想を掲げながら、最終的には皇帝として強い独裁的権力を持った。</li>
+        <li><strong>征服への反発</strong>：フランスの支配に対して、各地で民族意識や抵抗運動が強まった。</li>
+        <li><strong>ロシア遠征の失敗</strong>：広大なロシアと冬の厳しさ、補給の難しさに苦しみ、軍の大部分を失った。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>年表で見るナポレオン</h2>
+      <table>
+        <tr><th>年</th><th>出来事</th></tr>
+        <tr><td>1769年</td><td>コルシカ島に生まれる。</td></tr>
+        <tr><td>1796年</td><td>イタリア遠征で大きな成功を収め、名声を高める。</td></tr>
+        <tr><td>1799年</td><td>ブリュメール18日のクーデターで第一統領となる。</td></tr>
+        <tr><td>1804年</td><td>フランス皇帝に即位。ナポレオン法典も制定される。</td></tr>
+        <tr><td>1812年</td><td>ロシア遠征に失敗し、勢力が大きく衰える。</td></tr>
+        <tr><td>1815年</td><td>ワーテルローの戦いに敗れ、セントヘレナ島へ流される。</td></tr>
+        <tr><td>1821年</td><td>セントヘレナ島で死去。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <div class="quote">
+        革命が開いた「能力で上へ行く道」を、最も劇的に駆け上がった人物。
+        <small>ただし、その道はヨーロッパ規模の戦争と独裁にもつながった。</small>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. ナポレオンが生まれた場所はどこ？</h3>
+          <ol class="choices" type="A">
+            <li>コルシカ島</li>
+            <li>ロンドン</li>
+            <li>ウィーン</li>
+            <li>モスクワ</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。ナポレオンは1769年、地中海のコルシカ島に生まれました。</p></details>
+        </li>
+        <li>
+          <h3>Q2. 1799年にナポレオンが実権を握るきっかけになった出来事は？</h3>
+          <ol class="choices" type="A">
+            <li>ワーテルローの戦い</li>
+            <li>ブリュメール18日のクーデター</li>
+            <li>アメリカ独立宣言</li>
+            <li>大塩平八郎の乱</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。1799年のクーデターで統領政府を作り、第一統領として政治の実権を握りました。</p></details>
+        </li>
+        <li>
+          <h3>Q3. ナポレオンの評価として適切なのはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>戦争とは無関係な科学者だった</li>
+            <li>革命の理想を広めた面と、戦争・独裁を拡大した面の両方がある</li>
+            <li>日本の江戸幕府を直接倒した</li>
+            <li>一度も敗北しなかった</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。ナポレオンは近代法や行政制度に影響を残した一方、ヨーロッパ各地を戦争に巻き込み、皇帝として強い権力を持ちました。</p></details>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>関連する解説</h2>
+      <ul class="related-list">
+        <li><a href="oshio-heihachiro-rebellion.html">大塩平八郎の乱</a></li>
+      </ul>
+    </section>
+
+    <p class="note">学習用の概説です。戦役の細かな経過や評価には国・研究者によって違いがあるため、レポートでは教科書や専門書で確認してください。</p>
+  </main>
+</body>
+</html>
