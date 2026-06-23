@@ -61,6 +61,16 @@
       "summary": "画像や動画解析は、文章用LLM単体というより、視覚情報を取り込むモデルと言語モデルを組み合わせたVLMやマルチモーダルAIが担う。動画では時間変化や動きも扱うため、画像解析より難しくなる。",
       "created": "2026-06-23",
       "related": ["llm-next-token-prediction", "ai-harness"]
+    },
+    {
+      "id": "valorant-patch-13-00",
+      "title": "VALORANT パッチ13.00まとめ",
+      "file": "pages/valorant-patch-13-00.html",
+      "category": "ゲーム",
+      "tags": ["VALORANT", "パッチノート", "13.00", "Summit", "Retake", "ゲームアップデート"],
+      "summary": "VALORANT パッチ13.00はV26 Act 4開始に合わせたアップデート。センチネル強化、イニシエーターのクールダウン短縮、新マップSummit、Retake、RR/MMR調整、Bandit調整などが入った。",
+      "created": "2026-06-24",
+      "related": []
     }
   ]
 }

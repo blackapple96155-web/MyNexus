@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VALORANT パッチ13.00まとめ</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #2c2622;
+      --accent: #b5402f;
+      --accent-soft: #f3d9d2;
+      --gold: #c79a3b;
+      --card: #fffdf8;
+      --line: #e2d9c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 0 16px 64px;
+    }
+    header {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 56px 24px 40px;
+    }
+    header .cat-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 { font-size: 2.1rem; margin: 0 0 12px; letter-spacing: 0.03em; }
+    header .read { font-size: 1.02rem; color: #6b6258; }
+    main { max-width: 900px; margin: 0 auto; }
+    .nav-back {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .nav-back:hover { text-decoration: underline; }
+    .article-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+    .article-meta div {
+      background: #fff8ef;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+    }
+    .article-meta span {
+      display: block;
+      color: #8a8175;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: 22px 0;
+      box-shadow: 0 6px 18px rgba(60,40,20,0.06);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 6px solid var(--accent);
+    }
+    .tldr {
+      background: linear-gradient(135deg, #fff7f2, #f3e7dd);
+      border: 1px solid var(--accent-soft);
+    }
+    .tldr h2 { border-left-color: var(--gold); }
+    .hl {
+      background: var(--accent-soft);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.96rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--accent); color: #fff; font-weight: 600; }
+    tr:nth-child(even) td { background: #fbf6f2; }
+    ul.plain, ol.steps {
+      padding-left: 0;
+      list-style: none;
+    }
+    ul.plain li, ol.steps li {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 12px;
+    }
+    ul.plain li::before {
+      content: "▶";
+      position: absolute;
+      left: 0; top: 2px;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    ol.steps { counter-reset: step; }
+    ol.steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 0;
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 10px;
+    }
+    .flow .box {
+      flex: 1;
+      min-width: 130px;
+      background: #fbf6f2;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .flow .box.hl-box { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .flow .arrow { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-weight: 700; }
+    .quiz-list {
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+    .quiz-list > li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff8ef;
+      padding: 16px 18px;
+    }
+    .quiz-list h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .choices {
+      margin: 0 0 10px;
+      padding-left: 1.4em;
+    }
+    .choices li { margin: 4px 0; }
+    details.answer {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.answer summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .related-empty { color: #8a8175; font-size: 0.92rem; }
+    .source a {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .note {
+      font-size: 0.85rem;
+      color: #8a8175;
+      text-align: center;
+      margin-top: 30px;
+    }
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.55rem; }
+      .card { padding: 22px 18px; }
+      .flow { flex-direction: column; }
+      .flow .arrow { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="cat-badge">ゲーム・アップデート</span>
+    <h1>VALORANT パッチ13.00まとめ</h1>
+    <p class="read">V26 Act 4 / 2026年6月23日公開</p>
+  </header>
+
+  <main>
+    <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+    <section class="article-meta" aria-label="記事メタ情報">
+      <div><span>初版日</span>2026-06-24</div>
+      <div><span>更新日</span>2026-06-24</div>
+      <div><span>記事ID</span>valorant-patch-13-00</div>
+    </section>
+
+    <section class="card tldr">
+      <h2>ひとことで言うと</h2>
+      <p>
+        VALORANT パッチ13.00は、<span class="hl">V26 Act 4開始に合わせた大型寄りのアップデート</span>です。
+        目玉は、センチネル全体の強化、イニシエーターのシグネチャーアビリティ短縮、新マップ <span class="hl">Summit</span> のコンペ導入、
+        新期間限定モード <span class="hl">Retake</span>、RR/MMRまわりの調整、Banditの扱いやすさ改善です。
+        全体として「防衛側の粘り」「終盤の情報取り」「ランク体験の安定」を少し押し上げるパッチと見てよさそうです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>基本データ</h2>
+      <table>
+        <tr><th>項目</th><th>内容</th></tr>
+        <tr><td>パッチ</td><td>13.00</td></tr>
+        <tr><td>公開日</td><td>2026年6月23日</td></tr>
+        <tr><td>シーズン</td><td>V26 Act 4開始</td></tr>
+        <tr><td>主な対象</td><td>エージェント、コンペティティブ、マップ、モード、武器、クライアント、バグ修正</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>今回の全体像</h2>
+      <div class="flow">
+        <div class="box">センチネル強化</div>
+        <div class="arrow">→</div>
+        <div class="box">攻めの雑な5人押しを抑制</div>
+        <div class="arrow">→</div>
+        <div class="box hl-box">試合展開を戦略寄りに</div>
+        <div class="arrow">→</div>
+        <div class="box">ランク・新マップも調整</div>
+      </div>
+      <p style="margin-top:14px;">
+        Riotの説明では、センチネルは「低情報の5人ラッシュ」を咎める役割として重視されています。
+        13.00ではその役割を強くしつつ、イニシエーターにも終盤で再びアビリティを使いやすくする調整が入っています。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>エージェント調整 — センチネル強化</h2>
+      <table>
+        <tr><th>エージェント</th><th>変更点</th><th>意味</th></tr>
+        <tr><td>Cypher</td><td>Trapwireの発動までの時間が0.9秒から0.7秒に短縮。</td><td>ワイヤーに引っかかった敵を咎めやすくなる。</td></tr>
+        <tr><td>Killjoy</td><td>Turretの連射速度が50%増加。Nanoswarmの持続が4秒から5秒へ。Alarmbotの移動速度が50%増加。</td><td>サイト保持と遅延性能が上がる。</td></tr>
+        <tr><td>Veto</td><td>Interceptorの回収クールダウン短縮。Crosscutの範囲拡大と設置後の起動短縮。</td><td>配置し直しや守りの組み立てがしやすくなる。</td></tr>
+        <tr><td>Sage</td><td>Healing Orbの自己回復量が50から100へ。</td><td>自分で耐える力が上がり、アンカー性能が増す。</td></tr>
+        <tr><td>Deadlock</td><td>GravNetのクールダウンが60秒から50秒へ。</td><td>ラウンド中に再使用を狙いやすくなる。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>イニシエーターとOmenの変更</h2>
+      <ul class="plain">
+        <li><strong>シグネチャー短縮</strong>：Sova、Fade、Skye、Breach、KAY/Oのシグネチャーアビリティのクールダウンが60秒から50秒へ。</li>
+        <li><strong>Gekko</strong>：仲間を回収した後のクールダウンが20秒から15秒へ。</li>
+        <li><strong>Omen</strong>：Shrouded Stepの敵向け音声が、聞き取りやすさを上げる方向で調整。</li>
+        <li><strong>ボイスライン</strong>：複数エージェントの音声や重要なゲームプレイ音声が整理され、Summit向けの会話も追加。</li>
+      </ul>
+      <p>
+        イニシエーターは単純な火力強化ではなく、<span class="hl">終盤にもう一度情報取りや起点作りをしやすくする調整</span>です。
+        Omenの変更は強弱というより、敵がテレポートを把握しやすくする明瞭性改善に近いです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>マップ — Summitがコンペ入り</h2>
+      <p>
+        新マップ <span class="hl">Summit</span> は、中国の山中にあるRadiant訓練施設を舞台にした5v5 Spikeモード用マップです。
+        3レーン・2サイト構成で、ラウンド中に戦場を変える「落とせる壁」が特徴として紹介されています。
+      </p>
+      <table>
+        <tr><th>項目</th><th>内容</th></tr>
+        <tr><td>コンペ導入</td><td>13.00からCompetitiveでプレイ可能。</td></tr>
+        <tr><td>ローンチ保護</td><td>最初の2週間、SummitでのRR減少は50%軽減。勝利時のRRは通常通り。</td></tr>
+        <tr><td>専用キュー</td><td>Summit Onlyキューが7日間登場。形式はSwiftplay。</td></tr>
+        <tr><td>マッププール</td><td>SummitとSunsetがIN、FractureとPearlがOUT。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>新モード — Retake</h2>
+      <p>
+        Retakeは、すでにSpikeが設置された状態から始まる3v3の期間限定モードです。
+        片方は設置後のサイトを守り、もう片方はリテイクして解除を狙います。
+      </p>
+      <ol class="steps">
+        <li>3v3で単一サイトをプレイする。</li>
+        <li>Spikeはラウンド開始後すぐ、見える位置に自動設置される。</li>
+        <li>ラウンドごとに攻守が入れ替わる。</li>
+        <li>武器・アーマー・アビリティはカード選択式で、通常の経済はない。</li>
+        <li>先に5ラウンド取ったチームが勝利する。</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>ランク・武器・クライアント</h2>
+      <table>
+        <tr><th>領域</th><th>変更点</th><th>プレイヤーへの影響</th></tr>
+        <tr><td>RR計算</td><td>勝ち続けているプレイヤーが停滞しにくく感じるよう、RR計算を調整。</td><td>特に高ランク帯で上がり方の体感が変わる可能性。</td></tr>
+        <tr><td>マッチメイキング</td><td>PC版では両チームの平均ランクが1サブティア以内に収まりやすくなる調整。</td><td>ロビーのランク差が少し安定する狙い。</td></tr>
+        <tr><td>Bandit</td><td>回復、タップ効率、最大ピッチリコイルが改善。</td><td>ピストルラウンド以外でも使いやすくなる方向。</td></tr>
+        <tr><td>Inbox</td><td>クライアント内通知を後から見返せるInboxが追加。</td><td>ギフト、Premier、RR返還、通報フィードバックなどを確認しやすい。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>プレイへの影響をざっくり読む</h2>
+      <ul class="plain">
+        <li><strong>攻めは情報なしの突入が少し通しにくくなる</strong>：センチネルの拘束・遅延・検知性能が底上げされるため。</li>
+        <li><strong>守りはアンカーが粘りやすくなる</strong>：Sageの自己回復やKilljoyの遅延強化が効きやすい。</li>
+        <li><strong>終盤のイニシエーター価値が上がる</strong>：50秒クールダウンにより、ラウンド後半の再使用が現実的になる。</li>
+        <li><strong>Summitは早めに触る価値がある</strong>：専用キューとRR損失軽減があるため、学習のリスクがやや低い。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>注意点・まだ様子見なところ</h2>
+      <p>
+        パッチ直後は、数字だけでは実際のメタを読み切れません。
+        とくにSummitは研究が進むほど評価が変わりますし、センチネル強化もランク帯や構成によって効き方が変わります。
+      </p>
+      <table>
+        <tr><th>見るべき点</th><th>理由</th></tr>
+        <tr><td>センチネル採用率</td><td>強化が構成単位でどれほど影響するかを見るため。</td></tr>
+        <tr><td>Summitの攻守差</td><td>新マップは初期理解の差が勝率に出やすいため。</td></tr>
+        <tr><td>Retakeの練習効果</td><td>実戦のポストプラント判断にどれほどつながるかを見るため。</td></tr>
+        <tr><td>Banditの購入タイミング</td><td>GhostやSheriffとの住み分けが変わるかを見るため。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>つまり何が大事？</h2>
+      <p>
+        パッチ13.00は、単なる細かい数値調整ではなく、
+        <span class="hl">Act 4の開始に合わせて、マップ・ランク・モード・ロールバランスをまとめて動かすパッチ</span>です。
+        すぐ意識したいのは、センチネルの守りを軽視しないこと、イニシエーターの再使用タイミングを見直すこと、
+        Summitを早めに学ぶこと、Retakeでポストプラントの判断を練習することです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. パッチ13.00のセンチネル強化の狙いとして最も近いものはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>すべてのセンチネルをデュエリストのように高速突入させるため</li>
+            <li>低情報の5人サイトヒットを咎め、サイト防衛やアンカー性能を高めるため</li>
+            <li>全アビリティを削除して銃撃戦だけにするため</li>
+            <li>センチネルをコンペティティブで使用禁止にするため</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。Riotはセンチネルの役割を、雑な5人押しを抑え、戦略的な攻防を促すものとして説明しています。</p></details>
+        </li>
+        <li>
+          <h3>Q2. Summit導入時のRR損失軽減が意味することとして最も適切なのはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>Summitでは負けても内部MMRが絶対に変化しない</li>
+            <li>新マップ学習の負担を下げつつ、勝利時の報酬は通常通りにする狙いがある</li>
+            <li>Summitはコンペではなくカスタム専用になる</li>
+            <li>Summitで勝ってもRRは一切増えない</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。最初の2週間はSummitでのRR損失が50%軽減されますが、勝利時は通常通りRRを得られるため、学習しやすくする設計です。</p></details>
+        </li>
+        <li>
+          <h3>Q3. このパッチ後のプレイ方針として最もバランスがよいものはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>センチネル強化を無視して、毎ラウンド情報なしで5人ラッシュする</li>
+            <li>イニシエーターの再使用時間、センチネルの遅延力、Summitの構造を意識して戦略を調整する</li>
+            <li>Retakeは通常VALORANTと無関係なので一切練習にならないと決めつける</li>
+            <li>Banditは弱体化だけされたので購入候補から完全に外す</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。13.00はロール、マップ、ランク、モードが広く動くため、単体の数値だけでなく試合全体の判断を調整するのが重要です。</p></details>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card source">
+      <h2>参照元</h2>
+      <p>
+        この記事は Riot Games 公式の
+        <a href="https://playvalorant.com/en-us/news/game-updates/valorant-patch-notes-13-00/">VALORANT Patch Notes 13.00</a>
+        をもとに、日本語で要点を整理したものです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>関連する解説</h2>
+      <p class="related-empty">まだ関連ページがありません。ゲームやパッチ関連の記事が増えると、ここに繋げていきます。</p>
+    </section>
+
+    <p class="note">学習用・整理用の概説です。数値や仕様は今後のパッチで変わる可能性があるため、プレイ前には公式パッチノートも確認してください。</p>
+  </main>
+</body>
+</html>
