@@ -1,17 +1,25 @@
+# MyNexus は知識ベースのファイル（HTML / JSON）だけを公開する。
+# いったん全部無視して、必要なものだけ下で許可する方式。
+
+# OS / エディタ
 .DS_Store
 
 # まず全部無視
 /*
 
-# 公開対象（HTML / JSON のみ）
+# --- 公開対象（HTML / JSON のみ） ---
 !/index.html
+
+# pages/ 配下（HTML のみ）
 !/pages/
 /pages/*
 !/pages/*.html
+
+# data/ 配下（台帳 JSON のみ）
 !/data/
 /data/*
 !/data/*.json
 
-# 裏方の設定
+# --- 裏方の設定（公開コンテンツではないが git / Pages に必要） ---
 !/.gitignore
 !/.nojekyll

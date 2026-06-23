@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIにおける「ハーネス」とは？</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #2c2622;
+      --accent: #1f6f8b;
+      --accent-soft: #d6ebf2;
+      --gold: #c79a3b;
+      --card: #fffdf8;
+      --line: #e2d9c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 0 16px 64px;
+    }
+    header {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 56px 24px 40px;
+    }
+    header .cat-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 { font-size: 2.2rem; margin: 0 0 12px; letter-spacing: 0.03em; }
+    header .read { font-size: 1.02rem; color: #6b6258; }
+    main { max-width: 860px; margin: 0 auto; }
+    .nav-back {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .nav-back:hover { text-decoration: underline; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: 22px 0;
+      box-shadow: 0 6px 18px rgba(30,50,60,0.06);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 6px solid var(--accent);
+    }
+    .tldr {
+      background: linear-gradient(135deg, #f3fafc, #e8f4f8);
+      border: 1px solid var(--accent-soft);
+    }
+    .tldr h2 { border-left-color: var(--gold); }
+    .hl {
+      background: var(--accent-soft);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .analogy {
+      background: #fff7e8;
+      border: 1px dashed var(--gold);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-top: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.96rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--accent); color: #fff; font-weight: 600; }
+    tr:nth-child(even) td { background: #f5f9fa; }
+    ul.plain { padding-left: 0; list-style: none; }
+    ul.plain li {
+      position: relative;
+      padding-left: 26px;
+      margin-bottom: 12px;
+    }
+    ul.plain li::before {
+      content: "▶";
+      position: absolute;
+      left: 0; top: 2px;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 10px;
+    }
+    .flow .box {
+      flex: 1;
+      min-width: 120px;
+      background: #f5f9fa;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .flow .box.hl-box { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .flow .arrow { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-weight: 700; }
+    pre {
+      background: #2c2622;
+      color: #f4f1ea;
+      border-radius: 10px;
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    code { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
+    .note {
+      font-size: 0.85rem;
+      color: #8a8175;
+      text-align: center;
+      margin-top: 30px;
+    }
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.6rem; }
+      .card { padding: 22px 18px; }
+      .flow { flex-direction: column; }
+      .flow .arrow { transform: rotate(90deg); padding: 4px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="cat-badge">AI・技術</span>
+    <h1>🦾 AIにおける「ハーネス」とは？</h1>
+    <p class="read">harness ／ ハーネス</p>
+  </header>
+
+  <main>
+    <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+
+    <section class="card tldr">
+      <h2>🪧 ひとことで言うと</h2>
+      <p>
+        AIの「ハーネス」とは、<span class="hl">AIモデル（とくにLLM）を実際に役立てるために、その周りを取り囲む“足回り”のソフトウェア一式</span>のことや。
+        モデル本体は「頭脳」やけど、それだけでは何もできひん。入力を整え、ツールを使わせ、出力を受け止め、繰り返し動かす——
+        そういう<span class="hl">モデルを実用的に動かす枠組み</span>を「ハーネス」と呼ぶんや。
+        文脈によって「エージェントハーネス」「評価（eval）ハーネス」など、少しずつ指すものが変わるで。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>🐴 言葉のイメージ — そもそも harness とは</h2>
+      <p>
+        「harness」はもともと、馬につける<span class="hl">引き具・馬具</span>のこと。
+        馬（力の源）に装着して、荷車につなぎ、手綱で御して、ちゃんと仕事をさせる道具やな。
+      </p>
+      <div class="analogy">
+        🐴 <strong>たとえ話</strong>：AIモデルは「力の強い馬」。そのままでは畑は耕せへん。
+        馬具（ハーネス）をつけて、鋤につないで、手綱でコントロールして初めて田畑を耕せる。
+        AIのハーネスも同じで、<strong>モデルの力を実際の仕事につなげる“装具”</strong>っちゅうわけや。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>🧩 ハーネスは何をしてくれる？</h2>
+      <ul class="plain">
+        <li><strong>入力の準備</strong>：プロンプトの組み立て、システム指示の付与、文脈（コンテキスト）の管理</li>
+        <li><strong>ツール連携</strong>：ファイル読み書き、コマンド実行、Web検索、API呼び出しなどをモデルに使わせる</li>
+        <li><strong>出力の処理</strong>：モデルの返答を解析し、ツール呼び出しを実行して結果を戻す</li>
+        <li><strong>ループ制御</strong>：「考える→道具を使う→結果を見てまた考える」を何度も回す（エージェント的動作）</li>
+        <li><strong>安全管理</strong>：実行できる操作の制限、確認の差し込み、エラー処理</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🔄 エージェントハーネスの動き（イメージ）</h2>
+      <div class="flow">
+        <div class="box">ユーザーの依頼</div>
+        <div class="arrow">→</div>
+        <div class="box hl-box">ハーネス<br><small>文脈整理・ツール提供</small></div>
+        <div class="arrow">→</div>
+        <div class="box">AIモデル<br><small>考える</small></div>
+        <div class="arrow">→</div>
+        <div class="box">ツール実行<br><small>結果を取得</small></div>
+      </div>
+      <p style="margin-top:14px;">
+        ツールの結果はまたハーネスを通じてモデルに戻され、<span class="hl">目的が達成されるまでこのループが繰り返される</span>。
+        この「回し続ける仕組み」こそハーネスの中核や。Kiro のような AI 開発環境も、まさに一種のハーネスやな。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>📚 文脈ごとの「ハーネス」の意味</h2>
+      <table>
+        <tr><th>呼び方</th><th>指すもの</th></tr>
+        <tr><td>エージェントハーネス<br>(agent harness)</td><td>LLMにツールを使わせ、自律的にタスクを進めさせる実行基盤。Cline, Aider, Kiro などの“中身”の枠組み。</td></tr>
+        <tr><td>評価ハーネス<br>(eval harness)</td><td>モデルの性能を測るためのテスト実行基盤。決まった問題セットを流し、回答を自動採点する。例：lm-evaluation-harness。</td></tr>
+        <tr><td>推論／実行ハーネス</td><td>モデルへの入出力やバッチ処理を扱う、運用まわりの足回りコード全般。</td></tr>
+      </table>
+      <p style="margin-top:14px; font-size:0.92rem; color:#6b6258;">
+        ※ いずれも共通するのは「モデル本体ではなく、<strong>モデルを動かす・試す・働かせるための外側の仕組み</strong>」を指す、という点や。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>💡 ざっくり整理</h2>
+      <table>
+        <tr><th></th><th>モデル本体</th><th>ハーネス</th></tr>
+        <tr><td>役割</td><td>考える・生成する「頭脳」</td><td>頭脳を実用に結びつける「足回り」</td></tr>
+        <tr><td>例</td><td>GPT, Claude などのLLM</td><td>プロンプト管理・ツール実行・ループ制御・評価基盤</td></tr>
+        <tr><td>たとえ</td><td>力の強い馬</td><td>馬具・手綱・荷車</td></tr>
+      </table>
+    </section>
+
+    <p class="note">🌾 学習用の概説です。「ハーネス」は文脈によって指す範囲が変わる用語のため、出典や使われ方に応じて意味を確認してください。</p>
+  </main>
+</body>
+</html>
