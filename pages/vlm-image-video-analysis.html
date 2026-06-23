@@ -51,6 +51,25 @@
       font-size: 0.9rem;
     }
     .nav-back:hover { text-decoration: underline; }
+    .article-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+    .article-meta div {
+      background: #f8f8fc;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+    }
+    .article-meta span {
+      display: block;
+      color: #8a8175;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
     .card {
       background: var(--card);
       border: 1px solid var(--line);
@@ -219,6 +238,11 @@
 
   <main>
     <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+    <section class="article-meta" aria-label="記事メタ情報">
+      <div><span>初版日</span>2026-06-23</div>
+      <div><span>更新日</span>2026-06-23</div>
+      <div><span>記事ID</span>vlm-image-video-analysis</div>
+    </section>
 
     <section class="card tldr">
       <h2>ひとことで言うと</h2>
