@@ -166,6 +166,36 @@
     }
     .related-list a:hover { transform: translateX(3px); }
     .related-empty { color: #8a8175; font-size: 0.92rem; }
+    .quiz-list {
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+    .quiz-list > li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff8ef;
+      padding: 16px 18px;
+    }
+    .quiz-list h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .choices {
+      margin: 0 0 10px;
+      padding-left: 1.4em;
+    }
+    .choices li { margin: 4px 0; }
+    details.answer {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.answer summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+    }
     @media (max-width: 520px) {
       header h1 { font-size: 1.7rem; }
       .card { padding: 22px 18px; }
@@ -251,6 +281,42 @@
         ― 民を救うために立ち上がった、元役人の反乱 ―
         <small>※ 大塩らが掲げた旗印として伝えられる言葉</small>
       </div>
+    </section>
+
+    <section class="card">
+      <h2>🧠 理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. 大塩平八郎の乱が起きた年は？</h3>
+          <ol class="choices" type="A">
+            <li>1600年</li>
+            <li>1837年</li>
+            <li>1868年</li>
+            <li>1945年</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。大塩平八郎の乱は1837年（天保8年）に大坂で起きました。</p></details>
+        </li>
+        <li>
+          <h3>Q2. 大塩平八郎はもともとどんな立場の人物だった？</h3>
+          <ol class="choices" type="A">
+            <li>元・大坂町奉行所の与力</li>
+            <li>海外から来た宣教師</li>
+            <li>明治政府の大臣</li>
+            <li>戦国時代の大名</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。大塩は元・大坂町奉行所の与力で、陽明学者でもありました。</p></details>
+        </li>
+        <li>
+          <h3>Q3. この乱が重要視される理由として近いものは？</h3>
+          <ol class="choices" type="A">
+            <li>幕府が完全に滅亡したから</li>
+            <li>元役人が幕府に反乱を起こし、幕府の権威を揺るがしたから</li>
+            <li>日本で初めて米が作られたから</li>
+            <li>大坂が首都になったから</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。反乱自体は半日で鎮圧されましたが、元役人が幕府に弓を引いた衝撃は大きく、社会不安を象徴しました。</p></details>
+        </li>
+      </ol>
     </section>
 
     <section class="card">

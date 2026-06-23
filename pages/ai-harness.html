@@ -140,6 +140,36 @@
       line-height: 1.6;
     }
     code { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
+    .quiz-list {
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+    .quiz-list > li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f5f9fa;
+      padding: 16px 18px;
+    }
+    .quiz-list h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .choices {
+      margin: 0 0 10px;
+      padding-left: 1.4em;
+    }
+    .choices li { margin: 4px 0; }
+    details.answer {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.answer summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+    }
     .note {
       font-size: 0.85rem;
       color: #8a8175;
@@ -236,6 +266,42 @@
         <tr><td>例</td><td>GPT, Claude などのLLM</td><td>プロンプト管理・ツール実行・ループ制御・評価基盤</td></tr>
         <tr><td>たとえ</td><td>力の強い馬</td><td>馬具・手綱・荷車</td></tr>
       </table>
+    </section>
+
+    <section class="card">
+      <h2>🧠 理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. AIにおける「ハーネス」は何を指す？</h3>
+          <ol class="choices" type="A">
+            <li>AIモデル本体の重みデータそのもの</li>
+            <li>モデルを実用的に動かすための外側の仕組み</li>
+            <li>人間の脳を直接読み取る装置</li>
+            <li>画像だけを生成する専用フォーマット</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。プロンプト管理、ツール連携、出力処理、ループ制御など、モデルの周囲を支える仕組みを指します。</p></details>
+        </li>
+        <li>
+          <h3>Q2. エージェントハーネスの中心的な役割はどれ？</h3>
+          <ol class="choices" type="A">
+            <li>ユーザーの依頼、モデル、ツール実行をつないでタスクを回す</li>
+            <li>コンピューターの画面を物理的に明るくする</li>
+            <li>モデルの学習データをすべて公開する</li>
+            <li>文章を必ず短歌に変換する</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。モデルが考え、ツールを使い、結果を受けてまた考える流れを制御します。</p></details>
+        </li>
+        <li>
+          <h3>Q3. 評価ハーネスの説明として正しいものはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>Webサイトの色だけを決める仕組み</li>
+            <li>モデルの性能を測るために問題セットを流して採点する基盤</li>
+            <li>キーボードの配列を変更する設定</li>
+            <li>公開リポジトリを自動で非公開にする機能</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。評価ハーネスは、決まった問題や基準でモデルを試し、性能を測るための実行基盤です。</p></details>
+        </li>
+      </ol>
     </section>
 
     <section class="card">

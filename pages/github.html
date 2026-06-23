@@ -163,6 +163,36 @@
       font-weight: 700;
     }
     .related-list a:hover { text-decoration: underline; }
+    .quiz-list {
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+    .quiz-list > li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8fbfd;
+      padding: 16px 18px;
+    }
+    .quiz-list h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .choices {
+      margin: 0 0 10px;
+      padding-left: 1.4em;
+    }
+    .choices li { margin: 4px 0; }
+    details.answer {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.answer summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+    }
     .note {
       font-size: 0.85rem;
       color: #8a8175;
@@ -266,6 +296,42 @@
         うまくいった版に戻したり、誰かの変更をレビューしたり、Webサイトを自動公開したりできます。
         個人のメモから大きなソフトウェア開発まで、同じ考え方で管理できるのが便利なところです。
       </p>
+    </section>
+
+    <section class="card">
+      <h2>理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. GitHubをもっともよく表す説明はどれ？</h3>
+          <ol class="choices" type="A">
+            <li>画像編集専用のアプリ</li>
+            <li>Gitの履歴をネット上で共有し、共同作業や公開ができるサービス</li>
+            <li>パスワードを自動生成するサービス</li>
+            <li>メールだけを送受信するサービス</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。GitHub はコードやファイルの変更履歴を共有し、レビューや公開にも使えるサービスです。</p></details>
+        </li>
+        <li>
+          <h3>Q2. 「commit」の意味として近いものはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>変更を履歴に記録するセーブポイント</li>
+            <li>GitHub上の変更を手元へ取り込むこと</li>
+            <li>公開リポジトリを非公開にすること</li>
+            <li>Webページの見た目だけを変えること</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。commit は「何を変えたか」をメッセージ付きで記録する操作です。</p></details>
+        </li>
+        <li>
+          <h3>Q3. publicリポジトリで特に注意すべきことはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>ファイル名を必ず英語にすること</li>
+            <li>画像を一切置かないこと</li>
+            <li>APIキーやパスワードなどの秘密情報を置かないこと</li>
+            <li>commitを1回しかしないこと</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は C。public リポジトリは誰でも見られるため、秘密情報や個人情報は絶対に置かないようにします。</p></details>
+        </li>
+      </ol>
     </section>
 
     <section class="card">
