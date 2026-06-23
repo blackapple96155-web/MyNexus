@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHubって何？</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #2c2622;
+      --accent: #2f5f7f;
+      --accent-soft: #dce9f1;
+      --gold: #c79a3b;
+      --card: #fffdf8;
+      --line: #e2d9c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 0 16px 64px;
+    }
+    header {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 56px 24px 40px;
+    }
+    header .cat-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 { font-size: 2.2rem; margin: 0 0 12px; letter-spacing: 0.03em; }
+    header .read { font-size: 1.02rem; color: #6b6258; }
+    main { max-width: 860px; margin: 0 auto; }
+    .nav-back {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .nav-back:hover { text-decoration: underline; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: 22px 0;
+      box-shadow: 0 6px 18px rgba(30,50,60,0.06);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 6px solid var(--accent);
+    }
+    .tldr {
+      background: linear-gradient(135deg, #f7fbfd, #eaf3f8);
+      border: 1px solid var(--accent-soft);
+    }
+    .tldr h2 { border-left-color: var(--gold); }
+    .hl {
+      background: var(--accent-soft);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .analogy {
+      background: #fff7e8;
+      border: 1px dashed var(--gold);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-top: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.96rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--accent); color: #fff; font-weight: 600; }
+    tr:nth-child(even) td { background: #f5f9fa; }
+    ul.plain, ol.steps { padding-left: 0; list-style: none; }
+    ul.plain li, ol.steps li {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 12px;
+    }
+    ul.plain li::before {
+      content: "▶";
+      position: absolute;
+      left: 0; top: 2px;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    ol.steps { counter-reset: step; }
+    ol.steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 0;
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 10px;
+    }
+    .flow .box {
+      flex: 1;
+      min-width: 130px;
+      background: #f5f9fa;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .flow .box.hl-box { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .flow .arrow { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-weight: 700; }
+    .related-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+    }
+    .related-list a {
+      display: block;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #faf6ee;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .related-list a:hover { text-decoration: underline; }
+    .note {
+      font-size: 0.85rem;
+      color: #8a8175;
+      text-align: center;
+      margin-top: 30px;
+    }
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.6rem; }
+      .card { padding: 22px 18px; }
+      .flow { flex-direction: column; }
+      .flow .arrow { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="cat-badge">AI・技術</span>
+    <h1>GitHubって何？</h1>
+    <p class="read">コードを置く場所であり、共同作業の記録台帳でもある</p>
+  </header>
+
+  <main>
+    <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+
+    <section class="card tldr">
+      <h2>ひとことで言うと</h2>
+      <p>
+        <span class="hl">GitHub</span> は、プログラムのコードや文章などのファイルをネット上に置き、
+        変更履歴を残しながら、複数人で安全に編集・共有するためのサービスです。
+        ざっくり言えば、<span class="hl">開発者向けのクラウド保管庫</span>であり、
+        <span class="hl">「誰が、いつ、何を変えたか」が見える共同作業の場所</span>です。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>まず Git と GitHub は別物</h2>
+      <table>
+        <tr><th>名前</th><th>何をするもの？</th></tr>
+        <tr><td>Git</td><td>ファイルの変更履歴を記録する道具。手元のPCでも使える。</td></tr>
+        <tr><td>GitHub</td><td>Git の履歴をネット上で共有し、レビューや公開もできるサービス。</td></tr>
+      </table>
+      <div class="analogy">
+        <strong>たとえ話</strong>：Git は「編集履歴を残せるノート術」、GitHub は「そのノートをチームで置いておくオンライン本棚」みたいなものです。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>GitHubでできること</h2>
+      <ul class="plain">
+        <li><strong>コードを保管する</strong>：プロジェクトごとにリポジトリを作り、ファイル一式を管理する。</li>
+        <li><strong>変更履歴を見る</strong>：いつ、誰が、どの行を変えたかを追える。</li>
+        <li><strong>共同編集する</strong>：複数人が別々に作業し、あとで変更を合流できる。</li>
+        <li><strong>レビューする</strong>：Pull Request で変更内容を確認し、コメントしてから取り込める。</li>
+        <li><strong>Webページを公開する</strong>：GitHub Pages を使うと、HTML などを公開サイトにできる。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>基本用語の地図</h2>
+      <table>
+        <tr><th>用語</th><th>意味</th></tr>
+        <tr><td>リポジトリ</td><td>プロジェクトのフォルダ一式。コード、画像、HTML、履歴などをまとめて置く場所。</td></tr>
+        <tr><td>コミット</td><td>変更のセーブポイント。「何を変えたか」をメッセージ付きで記録する。</td></tr>
+        <tr><td>ブランチ</td><td>本線から分かれた作業場所。試作や修正を本線に直接混ぜずに進められる。</td></tr>
+        <tr><td>Pull Request</td><td>「この変更を本線に入れてください」という提案。レビューの場にもなる。</td></tr>
+        <tr><td>push</td><td>手元の変更を GitHub に送ること。</td></tr>
+        <tr><td>pull</td><td>GitHub 側の変更を手元に取り込むこと。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>作業の流れ</h2>
+      <div class="flow">
+        <div class="box">手元で編集</div>
+        <div class="arrow">→</div>
+        <div class="box">commit<br><small>履歴に記録</small></div>
+        <div class="arrow">→</div>
+        <div class="box hl-box">push<br><small>GitHubへ送る</small></div>
+        <div class="arrow">→</div>
+        <div class="box">共有・公開</div>
+      </div>
+      <p style="margin-top:14px;">
+        MyNexus もこの流れで動いています。HTML ページを作り、`data/pages.json` を更新し、コミットして GitHub に push すると、GitHub Pages で公開されます。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>公開リポジトリで注意すること</h2>
+      <ol class="steps">
+        <li><strong>公開範囲を意識する</strong>：public リポジトリは誰でも見られます。</li>
+        <li><strong>秘密を書かない</strong>：APIキー、トークン、パスワード、個人情報は絶対に置かない。</li>
+        <li><strong>履歴にも注意する</strong>：一度コミットした内容は、削除しても履歴に残ることがあります。</li>
+        <li><strong>公開前に確認する</strong>：push する前に、公開してよいファイルだけが対象か確認する。</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>何がうれしいの？</h2>
+      <p>
+        GitHub の強みは、単にファイルを置けることではなく、<span class="hl">変更の理由と流れが残る</span>ことです。
+        うまくいった版に戻したり、誰かの変更をレビューしたり、Webサイトを自動公開したりできます。
+        個人のメモから大きなソフトウェア開発まで、同じ考え方で管理できるのが便利なところです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>関連する解説</h2>
+      <ul class="related-list">
+        <li><a href="ai-harness.html">AIにおける「ハーネス」とは？</a></li>
+      </ul>
+    </section>
+
+    <p class="note">学習用の概説です。実際に使うときは、公開設定と認証情報の扱いを必ず確認してください。</p>
+  </main>
+</body>
+</html>

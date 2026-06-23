@@ -20,7 +20,17 @@
       "tags": ["AI", "LLM", "エージェント", "ハーネス", "用語解説"],
       "summary": "AIのハーネスとは、モデル（特にLLM）を実用的に動かすために周囲を固めるソフトウェアの枠組み。プロンプト管理・ツール連携・出力処理・ループ制御などを担う。エージェントハーネスや評価ハーネスなど文脈で意味が変わる。",
       "created": "2026-06-22",
-      "related": []
+      "related": ["github"]
+    },
+    {
+      "id": "github",
+      "title": "GitHubって何？",
+      "file": "pages/github.html",
+      "category": "AI・技術",
+      "tags": ["GitHub", "Git", "開発", "バージョン管理", "GitHub Pages", "用語解説"],
+      "summary": "GitHubは、コードやファイルをネット上に置き、変更履歴を残しながら共同編集・レビュー・公開ができるサービス。Gitとの違いや基本用語、publicリポジトリでの注意点を整理する。",
+      "created": "2026-06-23",
+      "related": ["ai-harness"]
     }
   ]
 }
