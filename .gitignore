@@ -1,0 +1,17 @@
+.DS_Store
+
+# まず全部無視
+/*
+
+# 公開対象（HTML / JSON のみ）
+!/index.html
+!/pages/
+/pages/*
+!/pages/*.html
+!/data/
+/data/*
+!/data/*.json
+
+# 裏方の設定
+!/.gitignore
+!/.nojekyll
