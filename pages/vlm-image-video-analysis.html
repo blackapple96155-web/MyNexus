@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIによる画像や動画解析はLLMがやってるの？VLMとは？</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #2c2622;
+      --accent: #4f5f9b;
+      --accent-soft: #e4e7f7;
+      --gold: #c79a3b;
+      --card: #fffdf8;
+      --line: #e2d9c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 0 16px 64px;
+    }
+    header {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 56px 24px 40px;
+    }
+    header .cat-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 { font-size: 2.05rem; margin: 0 0 12px; letter-spacing: 0.03em; }
+    header .read { font-size: 1.02rem; color: #6b6258; }
+    main { max-width: 900px; margin: 0 auto; }
+    .nav-back {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .nav-back:hover { text-decoration: underline; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: 22px 0;
+      box-shadow: 0 6px 18px rgba(45,45,80,0.06);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 6px solid var(--accent);
+    }
+    .tldr {
+      background: linear-gradient(135deg, #f8f9ff, #eef0fb);
+      border: 1px solid var(--accent-soft);
+    }
+    .tldr h2 { border-left-color: var(--gold); }
+    .hl {
+      background: var(--accent-soft);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .analogy {
+      background: #fff7e8;
+      border: 1px dashed var(--gold);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-top: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.96rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--accent); color: #fff; font-weight: 600; }
+    tr:nth-child(even) td { background: #f8f8fc; }
+    ul.plain, ol.steps {
+      padding-left: 0;
+      list-style: none;
+    }
+    ul.plain li, ol.steps li {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 12px;
+    }
+    ul.plain li::before {
+      content: "▶";
+      position: absolute;
+      left: 0; top: 2px;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    ol.steps { counter-reset: step; }
+    ol.steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 0;
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 10px;
+    }
+    .flow .box {
+      flex: 1;
+      min-width: 130px;
+      background: #f8f8fc;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .flow .box.hl-box { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .flow .arrow { display: flex; align-items: center; padding: 0 8px; color: var(--accent); font-weight: 700; }
+    .quiz-list {
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+    .quiz-list > li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8f8fc;
+      padding: 16px 18px;
+    }
+    .quiz-list h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .choices {
+      margin: 0 0 10px;
+      padding-left: 1.4em;
+    }
+    .choices li { margin: 4px 0; }
+    details.answer {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.answer summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .related-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+    }
+    .related-list a {
+      display: block;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #faf6ee;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .related-list a:hover { text-decoration: underline; }
+    .note {
+      font-size: 0.85rem;
+      color: #8a8175;
+      text-align: center;
+      margin-top: 30px;
+    }
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.5rem; }
+      .card { padding: 22px 18px; }
+      .flow { flex-direction: column; }
+      .flow .arrow { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="cat-badge">AI・技術</span>
+    <h1>AIによる画像や動画解析はLLMがやってるの？VLMとは？</h1>
+    <p class="read">Vision-Language Model / multimodal AI</p>
+  </header>
+
+  <main>
+    <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+
+    <section class="card tldr">
+      <h2>ひとことで言うと</h2>
+      <p>
+        画像や動画を読むAIは、純粋な文章用LLMだけで動いているわけではありません。
+        多くの場合、画像を理解する<span class="hl">視覚モデル</span>と、言葉で説明・推論する<span class="hl">言語モデル</span>を組み合わせた
+        <span class="hl">VLM（Vision-Language Model）</span>や、さらに広い意味の<span class="hl">マルチモーダルモデル</span>が使われます。
+        ざっくり言えば、LLMが「言葉の頭脳」なら、VLMは「目と言葉をつなぐ頭脳」です。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>基本データ</h2>
+      <table>
+        <tr><th>用語</th><th>意味</th></tr>
+        <tr><td>LLM</td><td>主にテキストを入力・出力する大規模言語モデル。言語の理解・生成が中心。</td></tr>
+        <tr><td>VLM</td><td>Vision-Language Model。画像などの視覚情報と言語を結びつけるモデル。</td></tr>
+        <tr><td>マルチモーダルAI</td><td>テキスト、画像、音声、動画など複数の種類の情報を扱うAI。</td></tr>
+        <tr><td>動画解析</td><td>画像の連続に加えて、時間変化、動き、場面の流れを扱う解析。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>画像解析はどう動く？</h2>
+      <p>
+        画像解析では、まず画像をそのまま文章として読むのではなく、ピクセルの集まりから特徴を取り出します。
+        たとえば「赤い車」「人の顔」「机の上のコップ」「文字らしき領域」といった視覚的な手がかりです。
+        その特徴を、言語モデルが扱える形に変換し、質問文と合わせて答えを作ります。
+      </p>
+      <div class="flow">
+        <div class="box">画像</div>
+        <div class="arrow">→</div>
+        <div class="box">視覚エンコーダ<br><small>特徴を抽出</small></div>
+        <div class="arrow">→</div>
+        <div class="box hl-box">言語モデル<br><small>説明・推論</small></div>
+        <div class="arrow">→</div>
+        <div class="box">回答</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>VLMは「画像を見て話せるモデル」</h2>
+      <p>
+        VLMは、画像とテキストを同じタスクの中で扱えるように訓練されたモデルです。
+        画像に写っているものを説明したり、画像について質問に答えたり、図表を読み取ったりできます。
+        ただし「見えている」ように見えても、実際には<span class="hl">画像特徴と言語表現の対応関係</span>を学んで使っています。
+      </p>
+      <ul class="plain">
+        <li><strong>画像説明</strong>：写真に何が写っているかを文章にする。</li>
+        <li><strong>Visual Question Answering</strong>：画像を見ながら質問に答える。</li>
+        <li><strong>OCR補助</strong>：画像内の文字や表を読み取って説明する。</li>
+        <li><strong>図表理解</strong>：グラフ、スクリーンショット、UI画面の意味を推定する。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>LLMだけではなぜ難しい？</h2>
+      <p>
+        LLMは基本的にトークン、つまり文字列の単位を扱うモデルです。
+        生の画像はピクセルの配列なので、そのままではLLMにとって「読める文章」ではありません。
+        そこで画像を特徴量に変換する視覚側の仕組みが必要になります。
+      </p>
+      <table>
+        <tr><th>入力</th><th>LLM単体</th><th>VLM / マルチモーダルモデル</th></tr>
+        <tr><td>文章</td><td>得意。文脈から次のトークンを予測し回答する。</td><td>得意。文章と他の情報を組み合わせられる。</td></tr>
+        <tr><td>画像</td><td>画像を説明文に変換してもらわないと扱いにくい。</td><td>画像特徴を直接取り込み、質問と合わせて回答できる。</td></tr>
+        <tr><td>動画</td><td>フレーム説明や字幕が必要になりがち。</td><td>フレーム列、動き、音声などを組み合わせて解釈できる場合がある。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>動画解析はさらに難しい</h2>
+      <p>
+        動画は単なる画像の集まりではありません。
+        「誰が何をしたか」「物がどちらへ動いたか」「前後で状況がどう変わったか」という<span class="hl">時間方向の理解</span>が必要です。
+        そのため、動画AIではフレームごとの視覚理解に加えて、時系列を扱う仕組みが重要になります。
+      </p>
+      <ol class="steps">
+        <li>動画から代表的なフレームや短い区間を取り出す。</li>
+        <li>各フレームの人物、物体、文字、場面を読み取る。</li>
+        <li>フレーム間の変化や動きをつなぐ。</li>
+        <li>質問に合わせて、重要な場面を選んで説明する。</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>マルチモーダルAIとの関係</h2>
+      <p>
+        VLMは、マルチモーダルAIの一種と考えるとわかりやすいです。
+        「Vision + Language」なので画像と言語が中心ですが、最近のモデルは音声、動画、画面操作、センサー情報なども扱う方向に広がっています。
+      </p>
+      <table>
+        <tr><th>呼び方</th><th>主に扱う情報</th><th>例</th></tr>
+        <tr><td>LLM</td><td>テキスト</td><td>文章作成、要約、翻訳、コード補助</td></tr>
+        <tr><td>VLM</td><td>画像 + テキスト</td><td>画像質問応答、図表説明、スクリーンショット理解</td></tr>
+        <tr><td>Video-Language Model</td><td>動画 + テキスト</td><td>動画要約、行動認識、場面変化の説明</td></tr>
+        <tr><td>マルチモーダルモデル</td><td>複数の入力形式</td><td>画像・音声・動画・テキストを組み合わせた対話</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>ハーネスやツールも関係する</h2>
+      <p>
+        実際のアプリでは、モデル単体だけで完結しないことも多いです。
+        たとえば、画像から文字を読むOCR、動画を分割する処理、物体検出モデル、検索ツールなどを組み合わせ、
+        最後にVLMやLLMが説明をまとめる構成があります。
+      </p>
+      <div class="flow">
+        <div class="box">画像・動画</div>
+        <div class="arrow">→</div>
+        <div class="box">前処理<br><small>分割・OCR</small></div>
+        <div class="arrow">→</div>
+        <div class="box">VLM</div>
+        <div class="arrow">→</div>
+        <div class="box hl-box">ハーネス<br><small>検証・連携</small></div>
+      </div>
+      <p style="margin-top:14px;">
+        つまり「LLMかVLMか」だけでなく、<span class="hl">周辺ツールをどう組み合わせるか</span>も性能と安全性に大きく関わります。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>できること・苦手なこと</h2>
+      <table>
+        <tr><th>得意なこと</th><th>理由</th></tr>
+        <tr><td>画像の概要説明</td><td>写っている物体や場面の典型的な組み合わせを学んでいるため。</td></tr>
+        <tr><td>スクリーンショットの説明</td><td>UI部品や文字情報を言語と結びつけられるため。</td></tr>
+        <tr><td>図表のざっくり理解</td><td>軸、凡例、数値、ラベルの関係を読み取れる場合があるため。</td></tr>
+      </table>
+      <table>
+        <tr><th>苦手・注意</th><th>理由</th></tr>
+        <tr><td>細かい文字や小さな物体</td><td>解像度、圧縮、切り抜き方に左右される。</td></tr>
+        <tr><td>厳密な位置関係や数のカウント</td><td>見落としや誤認識が起こりやすい。</td></tr>
+        <tr><td>長い動画の因果関係</td><td>全フレームを完全に保持できず、重要場面を落とす可能性がある。</td></tr>
+        <tr><td>専門画像の診断</td><td>医療・法務・安全分野では専門家の確認が必要。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>誤解しやすいポイント</h2>
+      <ul class="plain">
+        <li><strong>VLMは万能の目ではない</strong>：見落とし、誤読、幻覚的な説明が起こる。</li>
+        <li><strong>画像を「理解」している範囲はタスク依存</strong>：概要説明は得意でも、精密測定は苦手な場合がある。</li>
+        <li><strong>動画は画像より一段難しい</strong>：時間変化、順序、因果を扱う必要がある。</li>
+        <li><strong>LLMとVLMは対立概念ではない</strong>：VLMの中にLLM的な言語処理部分が入っていることも多い。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>つまり何が大事？</h2>
+      <p>
+        AIの画像・動画解析は、文章だけを扱うLLM単体というより、
+        <span class="hl">視覚情報を取り込む仕組みと言語で説明する仕組みを組み合わせたもの</span>です。
+        画像と言語を結びつけるものはVLM、さらに動画・音声なども扱うものはマルチモーダルAIと呼ぶと整理しやすいです。
+        ただし、見えているように見えても間違えるため、重要な判断では元画像・元動画・専門知識による確認が必要です。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. VLMの説明として最も適切なのはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>画像や視覚情報と言語を結びつけて扱うモデル</li>
+            <li>テキストを一切扱わず、ピクセルだけを保存するデータベース</li>
+            <li>動画を必ず1枚の静止画に変換して終わる圧縮形式</li>
+            <li>LLMとは無関係で、言語による回答を絶対にしないモデル</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。VLMは Vision-Language Model で、画像などの視覚情報と言語を結びつけて、説明や質問応答を行うモデルです。</p></details>
+        </li>
+        <li>
+          <h3>Q2. 動画解析が画像解析より難しくなりやすい理由はどれ？</h3>
+          <ol class="choices" type="A">
+            <li>動画には色が存在しないから</li>
+            <li>1枚の画像だけでなく、時間変化、動き、前後関係を扱う必要があるから</li>
+            <li>動画解析では言語モデルが絶対に使えないから</li>
+            <li>動画はすべて音声だけで構成されているから</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は B。動画ではフレームごとの内容に加え、順序や動き、場面の変化をつなぐ必要があるため、静止画より複雑になります。</p></details>
+        </li>
+        <li>
+          <h3>Q3. 実用上の理解として最もバランスがよいものはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>VLMが答えた画像説明は必ず正確なので、確認は不要</li>
+            <li>画像を扱うAIはすべてLLM単体で、視覚モデルや前処理は存在しない</li>
+            <li>VLMやツールを組み合わせると便利だが、細部の誤読や動画の見落としがあるため検証が必要</li>
+            <li>動画解析は画像解析より必ず簡単で、時間方向は無視してよい</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は C。VLMは強力ですが、細かい文字、数、位置関係、長い動画の因果関係では間違うことがあります。重要用途では元データや専門家による確認が必要です。</p></details>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>関連する解説</h2>
+      <ul class="related-list">
+        <li><a href="llm-next-token-prediction.html">LLMはただの文章予測をしているだけなの？</a></li>
+        <li><a href="ai-harness.html">AIにおける「ハーネス」とは？</a></li>
+      </ul>
+    </section>
+
+    <p class="note">学習用の概説です。モデルごとに画像・動画・音声への対応範囲は異なるため、実際の用途では対象モデルの仕様と検証結果を確認してください。</p>
+  </main>
+</body>
+</html>

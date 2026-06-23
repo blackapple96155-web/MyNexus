@@ -20,7 +20,7 @@
       "tags": ["AI", "LLM", "エージェント", "ハーネス", "用語解説"],
       "summary": "AIのハーネスとは、モデル（特にLLM）を実用的に動かすために周囲を固めるソフトウェアの枠組み。プロンプト管理・ツール連携・出力処理・ループ制御などを担う。エージェントハーネスや評価ハーネスなど文脈で意味が変わる。",
       "created": "2026-06-22",
-      "related": ["github", "llm-next-token-prediction"]
+      "related": ["github", "llm-next-token-prediction", "vlm-image-video-analysis"]
     },
     {
       "id": "github",
@@ -50,7 +50,17 @@
       "tags": ["LLM", "AI", "次トークン予測", "推論", "言語モデル", "用語解説"],
       "summary": "LLMは次トークン予測を中心に学習するが、それを高精度に行うために文脈・意味・知識・推論パターンを内部的に利用する。過小評価も過大評価も避け、検証と組み合わせて使うことが重要。",
       "created": "2026-06-23",
-      "related": ["ai-harness"]
+      "related": ["ai-harness", "vlm-image-video-analysis"]
+    },
+    {
+      "id": "vlm-image-video-analysis",
+      "title": "AIによる画像や動画解析はLLMがやってるの？VLMとは？",
+      "file": "pages/vlm-image-video-analysis.html",
+      "category": "AI・技術",
+      "tags": ["VLM", "LLM", "マルチモーダルAI", "画像解析", "動画解析", "Vision-Language Model"],
+      "summary": "画像や動画解析は、文章用LLM単体というより、視覚情報を取り込むモデルと言語モデルを組み合わせたVLMやマルチモーダルAIが担う。動画では時間変化や動きも扱うため、画像解析より難しくなる。",
+      "created": "2026-06-23",
+      "related": ["llm-next-token-prediction", "ai-harness"]
     }
   ]
 }
