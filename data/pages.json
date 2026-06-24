@@ -30,7 +30,7 @@
       "tags": ["GitHub", "Git", "開発", "バージョン管理", "GitHub Pages", "用語解説"],
       "summary": "GitHubは、コードやファイルをネット上に置き、変更履歴を残しながら共同編集・レビュー・公開ができるサービス。Gitとの違いや基本用語、publicリポジトリでの注意点を整理する。",
       "created": "2026-06-23",
-      "related": ["ai-harness"]
+      "related": ["ai-harness", "seedance2-prompt-skills-github-stars"]
     },
     {
       "id": "napoleon-bonaparte-life",
@@ -71,6 +71,16 @@
       "summary": "VALORANT パッチ13.00はV26 Act 4開始に合わせたアップデート。センチネル強化、イニシエーターのクールダウン短縮、新マップSummit、Retake、RR/MMR調整、Bandit調整などが入った。",
       "created": "2026-06-24",
       "related": []
+    },
+    {
+      "id": "seedance2-prompt-skills-github-stars",
+      "title": "GitHubで最もスターを集めているSeedance 2.0 prompt skillは？",
+      "file": "pages/seedance2-prompt-skills-github-stars.html",
+      "category": "AI・技術",
+      "tags": ["GitHub", "Seedance 2.0", "prompt skill", "Claude Skills", "スター数", "AI動画生成"],
+      "summary": "GitHub上のSeedance 2.0 prompt skill系候補を調べたところ、2026年6月24日時点では dexhunter/seedance2-skill が2,217 starsで最多だった。スター数は変動するため、時点つきで見る必要がある。",
+      "created": "2026-06-24",
+      "related": ["github"]
     }
   ]
 }

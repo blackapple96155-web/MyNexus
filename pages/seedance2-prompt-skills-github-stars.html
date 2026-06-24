@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHubで最もスターを集めているSeedance 2.0 prompt skillは？</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --ink: #2c2622;
+      --accent: #2f5f7f;
+      --accent-soft: #dce9f1;
+      --gold: #c79a3b;
+      --card: #fffdf8;
+      --line: #e2d9c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.8;
+      padding: 0 16px 64px;
+    }
+    header {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 56px 24px 40px;
+    }
+    header .cat-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+    header h1 { font-size: 2.05rem; margin: 0 0 12px; letter-spacing: 0.03em; }
+    header .read { font-size: 1.02rem; color: #6b6258; }
+    main { max-width: 900px; margin: 0 auto; }
+    .nav-back {
+      display: inline-block;
+      margin: 0 0 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .nav-back:hover { text-decoration: underline; }
+    .article-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+    .article-meta div {
+      background: #f5f9fa;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+    }
+    .article-meta span {
+      display: block;
+      color: #8a8175;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 30px;
+      margin: 22px 0;
+      box-shadow: 0 6px 18px rgba(30,50,60,0.06);
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      margin: 0 0 16px;
+      padding-left: 14px;
+      border-left: 6px solid var(--accent);
+    }
+    .tldr {
+      background: linear-gradient(135deg, #f7fbfd, #eaf3f8);
+      border: 1px solid var(--accent-soft);
+    }
+    .tldr h2 { border-left-color: var(--gold); }
+    .hl {
+      background: var(--accent-soft);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.96rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--accent); color: #fff; font-weight: 600; }
+    tr:nth-child(even) td { background: #f5f9fa; }
+    ul.plain, ol.steps {
+      padding-left: 0;
+      list-style: none;
+    }
+    ul.plain li, ol.steps li {
+      position: relative;
+      padding-left: 30px;
+      margin-bottom: 12px;
+    }
+    ul.plain li::before {
+      content: "▶";
+      position: absolute;
+      left: 0; top: 2px;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    ol.steps { counter-reset: step; }
+    ol.steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 0;
+      width: 22px; height: 22px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .quiz-list {
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 18px;
+    }
+    .quiz-list > li {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f5f9fa;
+      padding: 16px 18px;
+    }
+    .quiz-list h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+    }
+    .choices {
+      margin: 0 0 10px;
+      padding-left: 1.4em;
+    }
+    .choices li { margin: 4px 0; }
+    details.answer {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.answer summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .related-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      list-style: none;
+    }
+    .related-list a, .source a {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .related-list a {
+      display: block;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #faf6ee;
+      text-decoration: none;
+    }
+    .note {
+      font-size: 0.85rem;
+      color: #8a8175;
+      text-align: center;
+      margin-top: 30px;
+    }
+    @media (max-width: 520px) {
+      header h1 { font-size: 1.5rem; }
+      .card { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="cat-badge">AI・GitHub調査</span>
+    <h1>GitHubで最もスターを集めているSeedance 2.0 prompt skillは？</h1>
+    <p class="read">2026年6月24日時点のGitHub API確認</p>
+  </header>
+
+  <main>
+    <a class="nav-back" href="../index.html">← MyNexus 一覧へ戻る</a>
+    <section class="article-meta" aria-label="記事メタ情報">
+      <div><span>初版日</span>2026-06-24</div>
+      <div><span>更新日</span>2026-06-24</div>
+      <div><span>記事ID</span>seedance2-prompt-skills-github-stars</div>
+    </section>
+
+    <section class="card tldr">
+      <h2>ひとことで言うと</h2>
+      <p>
+        GitHub上で「Seedance 2.0 / prompt / skill」系の候補リポジトリを調べた範囲では、
+        2026年6月24日時点で最もスター数が多かったのは
+        <span class="hl">dexhunter/seedance2-skill</span> でした。
+        GitHub APIで確認したスター数は <span class="hl">2,217 stars</span> です。
+        2位は <span class="hl">songguoxs/seedance-prompt-skill</span> の 2,006 stars でした。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>調査対象の前提</h2>
+      <p>
+        今回は、質問文の「promp skills」を「prompt skills / プロンプト作成用スキル」と解釈しました。
+        GitHubで「Seedance 2.0」「prompt」「skill」に関連する公開リポジトリを検索し、
+        そのうち説明文やREADME上でSeedance 2.0のプロンプト作成・Claude skill・Higgsfield向けPrompt Skillなどを扱うものを候補にしました。
+      </p>
+      <ul class="plain">
+        <li><strong>対象</strong>：Seedance 2.0の動画生成プロンプト作成を支援するGitHubリポジトリ。</li>
+        <li><strong>指標</strong>：GitHub APIの `stargazers_count`。</li>
+        <li><strong>時点</strong>：2026年6月24日時点。</li>
+        <li><strong>注意</strong>：GitHubのスター数は変動するため、将来順位が変わる可能性があります。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>スター数ランキング</h2>
+      <table>
+        <tr><th>順位</th><th>リポジトリ</th><th>Stars</th><th>概要</th></tr>
+        <tr><td>1</td><td><a href="https://github.com/dexhunter/seedance2-skill">dexhunter/seedance2-skill</a></td><td>2,217</td><td>Seedance 2.0向けの動画生成プロンプト作成スキル。</td></tr>
+        <tr><td>2</td><td><a href="https://github.com/songguoxs/seedance-prompt-skill">songguoxs/seedance-prompt-skill</a></td><td>2,006</td><td>Seedance 2.0 prompt skill。中国語説明も含む。</td></tr>
+        <tr><td>3</td><td><a href="https://github.com/Emily2040/seedance-2.0">Emily2040/seedance-2.0</a></td><td>1,554</td><td>Seedance 2.0を使ったAI映像制作パイプライン。</td></tr>
+        <tr><td>4</td><td><a href="https://github.com/beshuaxian/higgsfield-seedance2-jineng">beshuaxian/higgsfield-seedance2-jineng</a></td><td>622</td><td>Higgsfield / Seedance 2.0向けの複数Claude prompt skills。</td></tr>
+        <tr><td>5</td><td><a href="https://github.com/MapleShaw/seedance2.0-prompt-skill">MapleShaw/seedance2.0-prompt-skill</a></td><td>459</td><td>Seedance 2.0 prompt skill系リポジトリ。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>トップの dexhunter/seedance2-skill は何？</h2>
+      <p>
+        `dexhunter/seedance2-skill` は、Seedance 2.0で良い動画生成プロンプトを書くためのエージェント向けスキルです。
+        README上では、Claude Code、Cursor、Clineなど互換エージェントで使えるPrompt Writing Skillsとして説明されています。
+        英語版と中国語版のスキルファイルがあり、入力制約、参照構文、カメラ表現、プロンプト構造、テンプレートなどを扱う方向のリポジトリです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>なぜ「最もスターが多い」と言える？</h2>
+      <p>
+        今回の候補リストでは、1位の `dexhunter/seedance2-skill` が 2,217 stars、
+        2位の `songguoxs/seedance-prompt-skill` が 2,006 stars でした。
+        差は 211 stars なので、少なくとも今回確認したSeedance 2.0 prompt skill系候補の中では
+        <span class="hl">dexhunter/seedance2-skill がトップ</span>と判断できます。
+      </p>
+      <p>
+        ただし、GitHub検索は言葉の揺れに影響されます。
+        「Seedance」「Higgsfield」「Claude skills」「video prompt」など別キーワードで隠れた候補が見つかる可能性はあるため、
+        完全な全GitHub網羅というより、検索可能な主要候補の比較として読むのが安全です。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Prompt skillとして見るポイント</h2>
+      <table>
+        <tr><th>見る点</th><th>理由</th></tr>
+        <tr><td>テンプレートの具体性</td><td>カメラ、被写体、照明、動き、尺などをどこまで構造化しているかが重要。</td></tr>
+        <tr><td>対象ツール</td><td>Claude Code、Cursor、Cline、Higgsfieldなど、どの環境向けかで使い勝手が変わる。</td></tr>
+        <tr><td>参照素材の扱い</td><td>画像・動画・音声参照をどうプロンプトへ組み込むかがSeedance 2.0では重要。</td></tr>
+        <tr><td>更新頻度</td><td>動画生成モデルは仕様が変わりやすく、古いプロンプト作法が合わなくなることがある。</td></tr>
+        <tr><td>スター数</td><td>人気や発見されやすさの目安。ただし品質そのものの保証ではない。</td></tr>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>スター数だけで選んでいい？</h2>
+      <p>
+        スター数は便利な人気指標ですが、必ずしも自分に一番合うとは限りません。
+        たとえばHiggsfield向けに特化したいなら、`beshuaxian/higgsfield-seedance2-jineng` や
+        `OSideMedia/higgsfield-ai-prompt-skill` のようなHiggsfield寄りのリポジトリも候補になります。
+        一方、Seedance 2.0の基本的なプロンプト作成スキルを探すなら、今回トップの `dexhunter/seedance2-skill` はまず見る価値があります。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>調査の流れ</h2>
+      <ol class="steps">
+        <li>Tavilyで `site:github.com seedance 2.0 prompt skills stars` を検索。</li>
+        <li>GitHub検索で `seedance 2.0 prompt skill` に一致する公開リポジトリ候補を確認。</li>
+        <li>候補リポジトリをGitHub APIで照会し、`stargazers_count` を取得。</li>
+        <li>Seedance 2.0 prompt skill系として関連性が高い候補をスター順に比較。</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>つまり何が大事？</h2>
+      <p>
+        現時点で「GitHubで最もスターを稼いでいるSeedance 2.0のprompt skillは？」と聞かれたら、
+        答えは <span class="hl">dexhunter/seedance2-skill</span> です。
+        ただし、これは2026年6月24日時点のスター数に基づく判断であり、スター数は日々変動します。
+        実際に使うなら、スター数に加えて、READMEの内容、更新日、対応エージェント、テンプレートの質も確認するとよいです。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. 今回の調査範囲で最もスター数が多かったリポジトリはどれ？</h3>
+          <ol class="choices" type="A">
+            <li>dexhunter/seedance2-skill</li>
+            <li>fal-ai/seedance-2.0-api</li>
+            <li>github/gitignore</li>
+            <li>openai/openai-cookbook</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。候補内では `dexhunter/seedance2-skill` が 2,217 stars でトップでした。</p></details>
+        </li>
+        <li>
+          <h3>Q2. スター数だけでリポジトリの品質を完全に判断できない理由はどれ？</h3>
+          <ol class="choices" type="A">
+            <li>スター数は人気や発見されやすさの目安だが、用途適合性や更新頻度までは直接保証しないから</li>
+            <li>GitHubのスター数は常にゼロで固定だから</li>
+            <li>スター数が多いリポジトリはREADMEを持てないから</li>
+            <li>Seedance 2.0ではGitHubが利用禁止だから</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。スター数は有用な指標ですが、自分の用途に合うか、最新仕様に追従しているかは別に確認する必要があります。</p></details>
+        </li>
+        <li>
+          <h3>Q3. 今回の結論を扱う上で最も正確な姿勢はどれ？</h3>
+          <ol class="choices" type="A">
+            <li>2026年6月24日時点の主要候補比較ではdexhunter/seedance2-skillがトップ、と時点つきで理解する</li>
+            <li>GitHub全体で永久に順位が変わらないと断定する</li>
+            <li>スター数が2位以下のリポジトリはすべて無価値だと判断する</li>
+            <li>Seedance 2.0とは無関係なリポジトリもすべて同列に混ぜる</li>
+          </ol>
+          <details class="answer"><summary>答えを見る</summary><p>正解は A。スター数は変動し、検索語の範囲にも左右されるため、日付と調査対象を明示して読むのが安全です。</p></details>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card source">
+      <h2>参照元</h2>
+      <ul class="plain">
+        <li><a href="https://github.com/dexhunter/seedance2-skill">dexhunter/seedance2-skill</a></li>
+        <li><a href="https://github.com/songguoxs/seedance-prompt-skill">songguoxs/seedance-prompt-skill</a></li>
+        <li><a href="https://github.com/Emily2040/seedance-2.0">Emily2040/seedance-2.0</a></li>
+        <li><a href="https://github.com/beshuaxian/higgsfield-seedance2-jineng">beshuaxian/higgsfield-seedance2-jineng</a></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>関連する解説</h2>
+      <ul class="related-list">
+        <li><a href="github.html">GitHubって何？</a></li>
+      </ul>
+    </section>
+
+    <p class="note">スター数は2026年6月24日にGitHub APIで確認した値です。最新順位は各リポジトリページで再確認してください。</p>
+  </main>
+</body>
+</html>
