@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodexにおけるRulesとは？</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root { --bg:#f3f4f1; --ink:#26302c; --accent:#176551; --soft:#dcece6; --gold:#b9832d; --card:#fff; --line:#d7dfda; --code:#202824; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:0 16px 64px; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; background:var(--bg); color:var(--ink); line-height:1.8; }
+    header { max-width:900px; margin:auto; padding:56px 24px 40px; text-align:center; }
+    .badge { display:inline-block; margin-bottom:18px; padding:6px 16px; border-radius:999px; background:var(--accent); color:#fff; font-size:.85rem; }
+    h1 { margin:0 0 12px; font-size:2.15rem; }
+    header p { margin:0; color:#68736d; }
+    main { max-width:900px; margin:auto; }
+    a { color:var(--accent); }
+    .back { display:inline-block; margin-bottom:8px; text-decoration:none; }
+    .meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:18px; }
+    .meta div { padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:#f8faf9; font-size:.88rem; }
+    .meta span { display:block; color:#758079; font-size:.76rem; font-weight:700; }
+    .card { margin:22px 0; padding:28px 30px; border:1px solid var(--line); border-radius:8px; background:var(--card); box-shadow:0 5px 16px rgba(30,50,40,.05); }
+    .card h2 { margin:0 0 16px; padding-left:14px; border-left:6px solid var(--accent); font-size:1.35rem; }
+    .tldr { background:#f2faf7; border-color:#bad9cf; }
+    .tldr h2 { border-left-color:var(--gold); }
+    .hl { padding:1px 6px; border-radius:4px; background:var(--soft); color:#105443; font-weight:700; }
+    table { width:100%; border-collapse:collapse; font-size:.95rem; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--accent); color:#fff; }
+    tr:nth-child(even) td { background:#f7faf8; }
+    pre { overflow-x:auto; padding:17px 18px; border-radius:8px; background:var(--code); color:#f1f5f2; line-height:1.6; }
+    code { font-family:"SFMono-Regular",Consolas,monospace; font-size:.9em; }
+    :not(pre)>code { padding:2px 5px; border-radius:4px; background:#edf1ef; color:#244c40; }
+    .flow { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; align-items:center; gap:10px; margin:18px 0; }
+    .box { min-height:94px; padding:14px 12px; border:1px solid var(--line); border-radius:8px; background:#f7faf8; text-align:center; display:flex; flex-direction:column; justify-content:center; }
+    .box strong { color:var(--accent); }
+    .arrow { color:var(--accent); font-size:1.35rem; font-weight:700; }
+    ul.plain { padding:0; list-style:none; }
+    ul.plain li { position:relative; margin:10px 0; padding-left:24px; }
+    ul.plain li::before { content:"›"; position:absolute; left:4px; color:var(--accent); font-weight:700; }
+    .quiz-list { display:grid; gap:18px; padding:0; list-style:none; }
+    .quiz-list>li { padding:16px 18px; border:1px solid var(--line); border-radius:8px; background:#f7faf8; }
+    .quiz-list h3 { margin:0 0 10px; font-size:1.02rem; }
+    .choices { margin-bottom:10px; padding-left:1.4em; }
+    details { padding-top:10px; border-top:1px dashed var(--line); }
+    summary { color:var(--accent); cursor:pointer; font-weight:700; }
+    .related { display:grid; gap:10px; padding:0; list-style:none; }
+    .related a { display:block; padding:12px 14px; border:1px solid var(--line); border-radius:8px; background:#f7faf8; text-decoration:none; font-weight:700; }
+    .note { margin-top:30px; color:#758079; text-align:center; font-size:.85rem; }
+    @media(max-width:680px){h1{font-size:1.6rem}.card{padding:22px 18px}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}}
+  </style>
+</head>
+<body>
+  <header>
+    <span class="badge">AI・技術</span>
+    <h1>CodexにおけるRulesとは？</h1>
+    <p>コマンドを自動許可・毎回確認・禁止するための実行ポリシー</p>
+  </header>
+  <main>
+    <a class="back" href="../index.html">← MyNexus 一覧へ戻る</a>
+    <section class="meta" aria-label="記事メタ情報">
+      <div><span>初版日</span>2026-06-29</div>
+      <div><span>更新日</span>2026-06-29</div>
+      <div><span>記事ID</span>codex-rules</div>
+    </section>
+
+    <section class="card tldr">
+      <h2>結論</h2>
+      <p>Codexの<span class="hl">Rules</span>は、Codexがサンドボックス外で特定のコマンドを実行しようとした時に、<strong>自動許可するか、確認を求めるか、禁止するか</strong>を決めるルールです。</p>
+      <p>たとえば、<code>git commit</code>は自動許可し、公開につながる<code>git push origin main</code>は毎回確認する、といった制御ができます。文章の書き方や開発方針を教えるものではなく、主に<span class="hl">コマンド実行の境界を管理する仕組み</span>です。</p>
+    </section>
+
+    <section class="card">
+      <h2>Rulesが必要な理由</h2>
+      <p>Codexはファイル編集やコマンド実行を行えますが、すべてを無条件に許可すると、誤操作や意図しない公開につながります。一方、毎回すべてを確認すると作業が止まりがちです。</p>
+      <div class="flow" aria-label="Rulesの役割">
+        <div class="box"><strong>Codex</strong><span>コマンドを提案</span></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Rules</strong><span>許可方針を判定</span></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>実行結果</strong><span>許可・確認・禁止</span></div>
+      </div>
+      <p>Rulesは、よく使う安全な操作だけを自動化し、重要な操作には人間の判断を残すための中間層です。</p>
+    </section>
+
+    <section class="card">
+      <h2>3つの判定</h2>
+      <table>
+        <tr><th>decision</th><th>動作</th><th>適した例</th></tr>
+        <tr><td><code>allow</code></td><td>サンドボックス外で確認なしに実行を許可</td><td>限定した<code>git add</code>、テスト実行</td></tr>
+        <tr><td><code>prompt</code></td><td>実行前にユーザーへ確認</td><td><code>git push</code>、外部公開、ネットワーク操作</td></tr>
+        <tr><td><code>forbidden</code></td><td>確認せずブロック</td><td>組織で禁止する危険なコマンド</td></tr>
+      </table>
+      <p>複数のルールが一致した場合は、公式仕様上<span class="hl"><code>forbidden</code> → <code>prompt</code> → <code>allow</code></span>の順で、より厳しい判定が優先されます。</p>
+    </section>
+
+    <section class="card">
+      <h2>基本構造：prefix_rule</h2>
+      <pre><code>prefix_rule(
+    pattern = ["git", "commit"],
+    decision = "allow",
+    justification = "Allow creating local commits",
+)</code></pre>
+      <table>
+        <tr><th>項目</th><th>意味</th></tr>
+        <tr><td><code>pattern</code></td><td>照合するコマンドの先頭部分。必須です。</td></tr>
+        <tr><td><code>decision</code></td><td><code>allow</code>、<code>prompt</code>、<code>forbidden</code>から選びます。省略時はallowです。</td></tr>
+        <tr><td><code>justification</code></td><td>その判定にした理由。承認画面などに表示される場合があります。</td></tr>
+        <tr><td><code>match</code> / <code>not_match</code></td><td>想定したコマンドが一致・不一致になるか検証する例です。</td></tr>
+      </table>
+      <p><code>pattern</code>はコマンド文字列全体ではなく、引数を分けた配列として指定します。</p>
+    </section>
+
+    <section class="card">
+      <h2>Git操作を分けて考える例</h2>
+      <pre><code>prefix_rule(
+    pattern = ["git", "add"],
+    decision = "allow",
+)
+
+prefix_rule(
+    pattern = ["git", "commit"],
+    decision = "allow",
+)
+
+prefix_rule(
+    pattern = ["git", "push", "origin", "main"],
+    decision = "prompt",
+)</code></pre>
+      <p>この例では、手元で履歴を作るまでは自動化し、publicリポジトリへ送信する直前だけ確認します。<code>pattern = ["git"]</code>のように広く許可すると、意図しないGit操作まで対象になるため、<span class="hl">必要なサブコマンドまで絞る</span>のが基本です。</p>
+    </section>
+
+    <section class="card">
+      <h2>どこに保存される？</h2>
+      <table>
+        <tr><th>場所</th><th>範囲</th><th>注意</th></tr>
+        <tr><td><code>~/.codex/rules/default.rules</code></td><td>そのユーザーのCodex全体</td><td>個人用。通常はリポジトリに公開されません。</td></tr>
+        <tr><td><code>.codex/rules/*.rules</code></td><td>信頼済みプロジェクト</td><td>プロジェクト設定として共有され得ます。</td></tr>
+        <tr><td>Team Configのrules</td><td>組織・チーム</td><td>管理者が共通方針を配布できます。</td></tr>
+      </table>
+      <p>Codexは起動時に有効な設定階層の<code>rules/</code>を読み込みます。ファイルを追加・変更した後は<span class="hl">Codexを再起動</span>するのが確実です。承認画面で永続的な許可を選んだ場合も、ユーザー側のrulesへ保存されます。</p>
+    </section>
+
+    <section class="card">
+      <h2>AGENTS.mdやskillsとの違い</h2>
+      <table>
+        <tr><th>仕組み</th><th>決めるもの</th><th>例</th></tr>
+        <tr><td>Rules</td><td>コマンドを実行してよいか</td><td><code>git push</code>前に確認する</td></tr>
+        <tr><td>AGENTS.md</td><td>リポジトリ内で守る開発方針</td><td>テスト方法、命名規則、編集範囲</td></tr>
+        <tr><td>Skill</td><td>特定タスクの再利用可能な手順</td><td>記事作成、PDF生成、レビュー手順</td></tr>
+        <tr><td>config.toml</td><td>Codexの全体的な動作設定</td><td>モデル、承認方針、MCP設定</td></tr>
+      </table>
+      <p>「pushしてよいか」はRules、「質問！なら記事を作る」はSkill、「このリポジトリではこのテストを実行する」はAGENTS.md、という分担です。</p>
+    </section>
+
+    <section class="card">
+      <h2>サンドボックスとの関係</h2>
+      <p>Rulesとサンドボックスは同じものではありません。</p>
+      <ul class="plain">
+        <li><strong>サンドボックス</strong>：通常の実行で、技術的にどこまで読み書き・通信できるかを制限します。</li>
+        <li><strong>Rules</strong>：サンドボックス外での実行が必要な時、そのコマンドをどう扱うか判定します。</li>
+        <li><strong>承認ポリシー</strong>：どの場面で人間や自動レビュアーへ確認するかを決めます。</li>
+      </ul>
+      <p>Rulesで<code>allow</code>にしても、OS権限や組織の管理ポリシーを無効化できるわけではありません。より上位の制限があれば、そちらが優先されます。</p>
+    </section>
+
+    <section class="card">
+      <h2>複合コマンドはどう判定される？</h2>
+      <p>たとえば次の操作を考えます。</p>
+      <pre><code>git add . &amp;&amp; rm -rf /</code></pre>
+      <p>安全に解析できる単純な連結なら、Codexは各コマンドへ分割してルールを評価します。<code>git add</code>を許可していても、後半の危険な操作まで自動許可されるわけではありません。</p>
+      <p>ただし、変数展開、リダイレクト、ワイルドカード、複雑な制御構文が入る場合は保守的に扱われます。ルールを安定して効かせるには、<span class="hl">一つの実行に複雑なシェル処理を詰め込まない</span>ことが大切です。</p>
+    </section>
+
+    <section class="card">
+      <h2>設定をテストする</h2>
+      <pre><code>codex execpolicy check --pretty \
+  --rules ~/.codex/rules/default.rules \
+  -- git push origin main</code></pre>
+      <p>このコマンドは、実際にpushせず、どのルールが一致し、最終的にどの判定になるかを表示します。ルールを追加した時は、許可したい例だけでなく、許可したくない似たコマンドも確認すると安全です。</p>
+    </section>
+
+    <section class="card">
+      <h2>つまり何が大事？</h2>
+      <p>Rulesは、Codexを便利にするだけでなく、<span class="hl">自動化してよい境界を明文化する安全装置</span>です。よく使う低リスク操作は狭いprefixで許可し、公開・削除・外部送信などの操作は確認を残すのが実用的です。</p>
+      <p>なお、Codex公式ではRulesは実験的機能とされており、仕様が変わる可能性があります。設定後は再起動し、<code>codex execpolicy check</code>で実際の判定を確認してください。</p>
+    </section>
+
+    <section class="card">
+      <h2>理解度チェック</h2>
+      <ol class="quiz-list">
+        <li><h3>Q1. CodexのRulesが主に制御するものはどれ？</h3><ol class="choices" type="A"><li>生成文章の文体だけ</li><li>サンドボックス外で実行するコマンドの許可方針</li><li>LLMの学習データ</li><li>GitHubリポジトリの公開・非公開設定そのもの</li></ol><details><summary>答えを見る</summary><p>正解はB。Rulesはコマンドをallow、prompt、forbiddenのどれで扱うか決めます。文章方針はAGENTS.mdやSkillなど別の仕組みが担当します。</p></details></li>
+        <li><h3>Q2. <code>git commit</code>は自動化し、<code>git push origin main</code>は確認したい場合、適切なのはどれ？</h3><ol class="choices" type="A"><li><code>pattern=["git"]</code>をallowにする</li><li>両方をforbiddenにする</li><li>commitをallow、push origin mainをpromptに分ける</li><li>AGENTS.mdへ「全部許可」とだけ書く</li></ol><details><summary>答えを見る</summary><p>正解はC。リスクの違う操作を別々の狭いprefixで管理します。AではGitの広い範囲が許可され、Dは実行権限の設定になりません。</p></details></li>
+        <li><h3>Q3. allowルールがあるのにコマンドが禁止された場合、あり得る理由はどれ？</h3><ol class="choices" type="A"><li>Rulesでは複数の判定を扱えないから</li><li>より厳しいprompt・forbiddenルールや管理ポリシーが一致したから</li><li>allowは必ず一度しか動かないから</li><li>RulesはGit以外には使えないから</li></ol><details><summary>答えを見る</summary><p>正解はB。複数ルールでは最も厳しい判定が優先され、組織管理の制約もユーザー設定より上位になり得ます。</p></details></li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>参照元</h2>
+      <ul class="plain">
+        <li><a href="https://developers.openai.com/codex/rules">OpenAI公式：Codex Rules</a></li>
+        <li><a href="https://developers.openai.com/codex/agent-approvals-security">OpenAI公式：Agent approvals &amp; security</a></li>
+        <li><a href="https://developers.openai.com/codex/config-advanced">OpenAI公式：Advanced Configuration</a></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>関連する解説</h2>
+      <ul class="related"><li><a href="mcp-server.html">MCPサーバーとは？</a></li><li><a href="github.html">GitHubって何？</a></li><li><a href="ai-harness.html">AIにおける「ハーネス」とは？</a></li></ul>
+    </section>
+    <p class="note">本記事は2026年6月29日時点のCodex公式マニュアルを基にしています。Rulesは実験的機能であり、仕様が変わる可能性があります。</p>
+  </main>
+</body>
+</html>

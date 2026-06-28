@@ -20,7 +20,7 @@
       "tags": ["AI", "LLM", "エージェント", "ハーネス", "用語解説"],
       "summary": "AIのハーネスとは、モデル（特にLLM）を実用的に動かすために周囲を固めるソフトウェアの枠組み。プロンプト管理・ツール連携・出力処理・ループ制御などを担う。エージェントハーネスや評価ハーネスなど文脈で意味が変わる。",
       "created": "2026-06-22",
-      "related": ["github", "llm-next-token-prediction", "vlm-image-video-analysis", "mcp-server"]
+      "related": ["github", "llm-next-token-prediction", "vlm-image-video-analysis", "mcp-server", "codex-rules"]
     },
     {
       "id": "github",
@@ -30,7 +30,7 @@
       "tags": ["GitHub", "Git", "開発", "バージョン管理", "GitHub Pages", "用語解説"],
       "summary": "GitHubは、コードやファイルをネット上に置き、変更履歴を残しながら共同編集・レビュー・公開ができるサービス。Gitとの違いや基本用語、publicリポジトリでの注意点を整理する。",
       "created": "2026-06-23",
-      "related": ["ai-harness", "seedance2-prompt-skills-github-stars"]
+      "related": ["ai-harness", "seedance2-prompt-skills-github-stars", "codex-rules"]
     },
     {
       "id": "napoleon-bonaparte-life",
@@ -70,7 +70,17 @@
       "tags": ["MCP", "Model Context Protocol", "MCPサーバー", "AI", "LLM", "ツール連携", "用語解説"],
       "summary": "MCPサーバーは、AIアプリへ外部のツールやデータを標準化された方法で提供するプログラム。ホスト・クライアント・サーバーの関係、tools・resources・prompts、APIとの違い、安全上の注意を整理する。",
       "created": "2026-06-29",
-      "related": ["ai-harness", "llm-next-token-prediction"]
+      "related": ["ai-harness", "llm-next-token-prediction", "codex-rules"]
+    },
+    {
+      "id": "codex-rules",
+      "title": "CodexにおけるRulesとは？",
+      "file": "pages/codex-rules.html",
+      "category": "AI・技術",
+      "tags": ["Codex", "Rules", "prefix_rule", "サンドボックス", "承認", "セキュリティ", "用語解説"],
+      "summary": "CodexのRulesは、サンドボックス外で実行するコマンドを自動許可・確認・禁止に振り分ける実行ポリシー。prefix_ruleの書き方、保存場所、サンドボックスやAGENTS.mdとの違い、安全な設計を解説する。",
+      "created": "2026-06-29",
+      "related": ["mcp-server", "github", "ai-harness"]
     },
     {
       "id": "valorant-patch-13-00",
