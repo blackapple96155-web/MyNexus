@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCPサーバーとは？</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <style>
+    :root { --bg:#f2f4f1; --ink:#24302b; --accent:#176b58; --accent-soft:#dceee8; --gold:#c18b2d; --card:#fff; --line:#d6dfda; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:0 16px 64px; font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; background:var(--bg); color:var(--ink); line-height:1.8; }
+    header { max-width:900px; margin:0 auto; padding:56px 24px 40px; text-align:center; }
+    .badge { display:inline-block; margin-bottom:18px; padding:6px 16px; border-radius:999px; background:var(--accent); color:#fff; font-size:.85rem; }
+    h1 { margin:0 0 12px; font-size:2.2rem; }
+    header p { margin:0; color:#657069; }
+    main { max-width:900px; margin:0 auto; }
+    .back { display:inline-block; margin-bottom:8px; color:var(--accent); text-decoration:none; }
+    .meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:18px; }
+    .meta div { padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:#f8fbf9; font-size:.88rem; }
+    .meta span { display:block; color:#748078; font-size:.76rem; font-weight:700; }
+    .card { margin:22px 0; padding:28px 30px; border:1px solid var(--line); border-radius:8px; background:var(--card); box-shadow:0 5px 16px rgba(30,50,40,.05); }
+    .card h2 { margin:0 0 16px; padding-left:14px; border-left:6px solid var(--accent); font-size:1.35rem; }
+    .tldr { background:#f3fbf8; border-color:#bcdcd2; }
+    .tldr h2 { border-left-color:var(--gold); }
+    .hl { padding:1px 6px; border-radius:4px; background:var(--accent-soft); color:#105847; font-weight:700; }
+    table { width:100%; border-collapse:collapse; font-size:.95rem; }
+    th,td { padding:10px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--accent); color:#fff; }
+    tr:nth-child(even) td { background:#f7faf8; }
+    .flow { display:grid; grid-template-columns:1fr auto 1fr auto 1fr; align-items:center; gap:10px; margin:18px 0; }
+    .box { min-height:96px; padding:16px 12px; border:1px solid var(--line); border-radius:8px; background:#f7faf8; text-align:center; display:flex; flex-direction:column; justify-content:center; }
+    .box strong { color:var(--accent); }
+    .arrow { color:var(--accent); font-size:1.4rem; font-weight:700; }
+    ul.plain { padding:0; list-style:none; }
+    ul.plain li { position:relative; margin:10px 0; padding-left:24px; }
+    ul.plain li::before { content:"›"; position:absolute; left:4px; color:var(--accent); font-weight:700; }
+    ol.steps { padding-left:0; list-style:none; counter-reset:step; }
+    ol.steps li { position:relative; margin:12px 0; padding-left:38px; }
+    ol.steps li::before { content:counter(step); counter-increment:step; position:absolute; left:0; top:2px; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; text-align:center; line-height:26px; font-weight:700; }
+    .quiz-list { display:grid; gap:18px; padding:0; list-style:none; }
+    .quiz-list>li { padding:16px 18px; border:1px solid var(--line); border-radius:8px; background:#f7faf8; }
+    .quiz-list h3 { margin:0 0 10px; font-size:1.02rem; }
+    .choices { margin-bottom:10px; padding-left:1.4em; }
+    details { padding-top:10px; border-top:1px dashed var(--line); }
+    summary { color:var(--accent); cursor:pointer; font-weight:700; }
+    a { color:var(--accent); }
+    .related { display:grid; gap:10px; padding:0; list-style:none; }
+    .related a { display:block; padding:12px 14px; border:1px solid var(--line); border-radius:8px; background:#f7faf8; text-decoration:none; font-weight:700; }
+    .note { margin-top:30px; color:#748078; text-align:center; font-size:.85rem; }
+    @media (max-width:680px) { h1{font-size:1.65rem}.card{padding:22px 18px}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center} }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="badge">AI・技術</span>
+    <h1>MCPサーバーとは？</h1>
+    <p>AIと外部のデータ・道具を、共通の方式でつなぐ窓口</p>
+  </header>
+  <main>
+    <a class="back" href="../index.html">← MyNexus 一覧へ戻る</a>
+    <section class="meta" aria-label="記事メタ情報">
+      <div><span>初版日</span>2026-06-29</div>
+      <div><span>更新日</span>2026-06-29</div>
+      <div><span>記事ID</span>mcp-server</div>
+    </section>
+
+    <section class="card tldr">
+      <h2>結論</h2>
+      <p><span class="hl">MCPサーバー</span>は、AIアプリに対して「利用できる道具やデータはこれです」と、標準化された形で提供するプログラムです。MCPは <strong>Model Context Protocol</strong> の略で、AIアプリとファイル、データベース、Webサービスなどをつなぐ共通規格です。</p>
+      <p>たとえばGitHub用MCPサーバーを接続すると、対応するAIアプリは、そのサーバーが許可した範囲でリポジトリの情報取得やIssue操作などを行えます。サーバーがAIになるのではなく、<span class="hl">AIが外部機能を使うための接続口</span>になります。</p>
+    </section>
+
+    <section class="card">
+      <h2>まず「MCP」を分解する</h2>
+      <table>
+        <tr><th>語</th><th>意味</th><th>ここでの役割</th></tr>
+        <tr><td>Model</td><td>言語モデルを利用するAIアプリ</td><td>情報を判断し、必要な機能を選ぶ</td></tr>
+        <tr><td>Context</td><td>回答や作業に必要な外部情報</td><td>ファイル、検索結果、DBの内容など</td></tr>
+        <tr><td>Protocol</td><td>通信の共通ルール</td><td>異なるアプリとサービスの会話方法をそろえる</td></tr>
+      </table>
+      <p>MCP自体は特定のAIモデルではなく、異なる製品間で接続方法をそろえるための<span class="hl">オープンなプロトコル</span>です。</p>
+    </section>
+
+    <section class="card">
+      <h2>登場人物は3つ</h2>
+      <div class="flow" aria-label="MCPの接続図">
+        <div class="box"><strong>MCPホスト</strong><span>AIアプリ全体</span></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>MCPクライアント</strong><span>接続を管理</span></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>MCPサーバー</strong><span>機能や情報を提供</span></div>
+      </div>
+      <ul class="plain">
+        <li><strong>ホスト</strong>：ユーザーが操作するAIアプリ。会話や権限確認、モデルとの連携をまとめます。</li>
+        <li><strong>クライアント</strong>：ホスト内部で、特定のMCPサーバーとの接続を維持します。</li>
+        <li><strong>サーバー</strong>：外部サービスやローカル環境を、MCPの形式で公開します。</li>
+      </ul>
+      <p>日常会話ではホストとクライアントをまとめて「MCPクライアント」と呼ぶこともありますが、仕様上は役割が分かれています。</p>
+    </section>
+
+    <section class="card">
+      <h2>MCPサーバーが提供するもの</h2>
+      <table>
+        <tr><th>機能</th><th>役割</th><th>例</th></tr>
+        <tr><td>Tools</td><td>AIが呼び出せる操作</td><td>検索、Issue作成、SQL実行、ファイル更新</td></tr>
+        <tr><td>Resources</td><td>読み取って文脈にできるデータ</td><td>ファイル内容、スキーマ、ログ、文書</td></tr>
+        <tr><td>Prompts</td><td>再利用できる作業テンプレート</td><td>レビュー手順、定型調査、要約のひな型</td></tr>
+      </table>
+      <p>すべてのサーバーが3種類を全部提供する必要はありません。検索だけを提供するサーバーや、社内文書をリソースとして公開するサーバーも作れます。</p>
+    </section>
+
+    <section class="card">
+      <h2>実際にはどう動く？</h2>
+      <ol class="steps">
+        <li>AIアプリがMCPサーバーへ接続し、対応するプロトコル版や機能を確認します。</li>
+        <li>サーバーが利用可能なtools、resources、promptsなどを通知します。</li>
+        <li>ユーザーの依頼を受けたモデルが、必要なツールや情報を判断します。</li>
+        <li>AIアプリがMCP経由でサーバーへ要求を送り、サーバーが外部処理を実行します。</li>
+        <li>結果がAIアプリへ戻り、モデルがその結果を使って回答や次の処理を組み立てます。</li>
+      </ol>
+      <p>重要なのは、モデルが直接データベースやGitHubへ接続するのではなく、通常は<span class="hl">AIアプリとMCPサーバーが実行・通信を管理する</span>ことです。</p>
+    </section>
+
+    <section class="card">
+      <h2>ローカル型とリモート型</h2>
+      <table>
+        <tr><th>方式</th><th>置かれる場所</th><th>向いている用途</th><th>主な注意</th></tr>
+        <tr><td>ローカルMCPサーバー</td><td>自分のPC上</td><td>ローカルファイル、開発ツール、個人環境</td><td>インストールしたコードにPC上の権限を与える</td></tr>
+        <tr><td>リモートMCPサーバー</td><td>ネットワーク上</td><td>SaaS、共有DB、チーム向けサービス</td><td>認証、通信先、送信データの管理が必要</td></tr>
+      </table>
+      <p>ローカルでは標準入出力を使う方式、リモートではHTTPを使う方式が代表的です。どちらでも、MCPは機能の説明や要求・応答の形をそろえます。</p>
+    </section>
+
+    <section class="card">
+      <h2>APIやプラグインとの違い</h2>
+      <table>
+        <tr><th>概念</th><th>主眼</th><th>MCPとの関係</th></tr>
+        <tr><td>API</td><td>サービス固有の機能をプログラムへ公開する</td><td>MCPサーバーが背後でAPIを呼ぶことがある</td></tr>
+        <tr><td>プラグイン</td><td>特定アプリへ機能を追加する配布単位</td><td>内部にMCPサーバーを含む場合がある</td></tr>
+        <tr><td>MCP</td><td>AIアプリ向けの接続方法を共通化する</td><td>複数のAIアプリから同じ形式で扱いやすくする</td></tr>
+      </table>
+      <p>MCPはAPIを消すものではありません。サービスごとに異なるAPIやローカル処理を、AIアプリ側から共通の方法で見えるようにする<span class="hl">アダプターの規格</span>と考えると理解しやすくなります。</p>
+    </section>
+
+    <section class="card">
+      <h2>便利さとセキュリティは表裏一体</h2>
+      <ul class="plain">
+        <li><strong>信頼できる配布元を選ぶ</strong>：ローカルサーバーは、通常のアプリをインストールするのと同じ慎重さで確認します。</li>
+        <li><strong>最小権限にする</strong>：必要なフォルダ、リポジトリ、API権限だけを許可します。</li>
+        <li><strong>書き込み操作を確認する</strong>：削除、送信、購入、公開などは人間の承認を挟む設計が重要です。</li>
+        <li><strong>秘密情報を渡しすぎない</strong>：APIキーは公開設定や会話本文に書かず、安全な秘密管理を使います。</li>
+        <li><strong>説明だけを信用しない</strong>：ツール名が安全そうでも、実装コードと実際のアクセス範囲を確認します。</li>
+      </ul>
+      <p>公式の信頼モデルでも、クライアントは接続したサーバーを信頼し、ローカルサーバーはインストールしたソフトウェア同様のアクセスを持ち得るとされています。MCPにつないだから自動的に安全になるわけではありません。</p>
+    </section>
+
+    <section class="card">
+      <h2>具体例で整理する</h2>
+      <p>「このリポジトリで失敗中のIssueを調べ、修正案をまとめて」という依頼を考えます。</p>
+      <ol class="steps">
+        <li>GitHub用MCPサーバーがIssue検索ツールを公開します。</li>
+        <li>AIアプリがツールの説明と入力形式をモデルへ知らせます。</li>
+        <li>モデルが検索条件を決め、AIアプリがツール呼び出しを実行します。</li>
+        <li>サーバーがGitHub APIへ問い合わせ、結果を返します。</li>
+        <li>モデルがIssueの内容を読み、修正案をまとめます。</li>
+      </ol>
+      <p>この例では、GitHub APIが実際のサービス窓口、MCPサーバーがAI向けの翻訳・制御層、AIアプリが判断と実行をまとめる側です。</p>
+    </section>
+
+    <section class="card">
+      <h2>つまり何が大事？</h2>
+      <p>MCPサーバーは、AIに知識を学習させ直す仕組みではありません。必要な時に外部情報を読み、許可された操作を実行できるようにする仕組みです。</p>
+      <p><span class="hl">MCP＝共通の接続ルール、MCPサーバー＝道具とデータを提供する側、AIアプリ＝接続と実行を管理する側</span>と覚えると、全体像を外しにくくなります。そして導入時は、機能の多さよりも「何へアクセスでき、どの操作を実行できるか」を確認することが重要です。</p>
+    </section>
+
+    <section class="card">
+      <h2>理解度チェック</h2>
+      <ol class="quiz-list">
+        <li>
+          <h3>Q1. MCPサーバーの説明として最も適切なのはどれ？</h3>
+          <ol class="choices" type="A"><li>LLMそのものを追加学習する専用GPU</li><li>AIアプリへ外部のツールやデータを標準形式で提供するプログラム</li><li>あらゆるAPIを不要にする単一のクラウドサービス</li><li>AIの回答を保存するだけの文章ファイル</li></ol>
+          <details><summary>答えを見る</summary><p>正解はB。MCPサーバーはモデル本体ではなく、外部機能をMCPの形式で公開する接続口です。背後で既存APIを利用することもあるため、Cでもありません。</p></details>
+        </li>
+        <li>
+          <h3>Q2. AIがMCPツールを使う時の流れとして適切なのはどれ？</h3>
+          <ol class="choices" type="A"><li>モデルが必ず外部サービスへ直接ログインする</li><li>サーバーがモデルを再学習してから結果を返す</li><li>サーバーが機能を提示し、AIアプリが要求を送り、実行結果をモデルの文脈へ戻す</li><li>ユーザーの許可に関係なくサーバーが全ファイルを公開する</li></ol>
+          <details><summary>答えを見る</summary><p>正解はC。機能の発見、要求、外部処理、結果の返却という流れです。モデルが外部サービスへ直接接続するとは限らず、公開範囲もサーバー設定と権限で決まります。</p></details>
+        </li>
+        <li>
+          <h3>Q3. 未知のローカルMCPサーバーを導入する際、最も妥当な判断はどれ？</h3>
+          <ol class="choices" type="A"><li>MCP対応なら安全性は保証されるので、そのまま全権限を与える</li><li>ツール名だけ確認し、実装や配布元は確認しない</li><li>配布元、コード、必要権限、アクセス範囲を確認し、最小権限で実行する</li><li>ローカル型ならネットワークやファイルへ絶対にアクセスできないと考える</li></ol>
+          <details><summary>答えを見る</summary><p>正解はC。MCPは通信規格であって安全性の保証ではありません。ローカルサーバーも通常のソフトウェアと同様に、与えられた環境の権限を利用し得ます。</p></details>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>参照元</h2>
+      <ul class="plain">
+        <li><a href="https://modelcontextprotocol.io/docs/learn/architecture">Model Context Protocol公式ドキュメント：Architecture</a></li>
+        <li><a href="https://modelcontextprotocol.io/specification/2025-11-25">MCP公式仕様 2025-11-25</a></li>
+        <li><a href="https://github.com/modelcontextprotocol/modelcontextprotocol">MCP公式仕様・ドキュメント GitHubリポジトリ</a></li>
+        <li><a href="https://github.com/modelcontextprotocol/modelcontextprotocol/security">MCP公式リポジトリ：Trust Model</a></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>関連する解説</h2>
+      <ul class="related"><li><a href="ai-harness.html">AIにおける「ハーネス」とは？</a></li><li><a href="llm-next-token-prediction.html">LLMはただの文章予測をしているだけなの？</a></li></ul>
+    </section>
+    <p class="note">MCPは更新が続く仕様です。本記事は2026年6月29日時点の公式資料を基にしています。</p>
+  </main>
+</body>
+</html>
